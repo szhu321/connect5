@@ -17,6 +17,8 @@ public class Sprite implements Serializable
 	private double height;
 	private double faceAngle;
 	
+	private boolean visible;
+	
 	public Sprite(String name, String imgFileName, double x, double y, double width, double height, double faceAngle)
 	{
 		this.name = name;
@@ -25,8 +27,11 @@ public class Sprite implements Serializable
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		visible = true;
 	}
 	
+	
+
 	public void createImage()
 	{
 		image = new Image(imgFileName, width, height, false, true);
@@ -46,4 +51,6 @@ public class Sprite implements Serializable
 	public Image getImage() {return image;}
 	public String getName(){return name;}
 	public void setName(String name) {this.name = name;}
+	public boolean isVisible() {return visible;}
+	public void setVisible(boolean visible) {this.visible = visible;}
 }
