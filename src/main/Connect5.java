@@ -1,6 +1,7 @@
 package main;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -19,6 +20,10 @@ public class Connect5 extends Application
 	public void start(Stage st)
 	{
 		window = st;
+		window.setTitle("Connect 5");
+		
+		window.setScene(new Scene(new Group()));
+		window.show();
 	}
 	
 	public static double getScale()

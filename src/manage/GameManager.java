@@ -4,7 +4,7 @@ import javafx.stage.Stage;
 
 public class GameManager extends Manager
 {
-
+	
 	public GameManager(Stage window)
 	{
 		super(window);

@@ -2,18 +2,62 @@ package manage;
 
 import game.GameBoard;
 import game.GameConstants;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public abstract class Manager implements GameConstants
 {
 	protected Stage window;
-	protected GameBoard gameBoard;
+	GameBoard gameBoard;
+	VBox scoreBox;
+	Canvas canvas;
+	HBox tokenQueue;
+	
+	Scene scene;
+	
+	boolean myTurn;
 	
 	
 	public Manager(Stage window)
 	{
 		this.window = window;
 		gameBoard = new GameBoard();
+		setUpGameScene();
+	}
+	
+	//todo: creates the canvas 
+	private void setUpGameScene()
+	{
+		setUpScoreBox();
+		setUpCanvas();
+		setUpTokenQueue();
+	}
+	
+	//todo: creates labels to display both players scores.
+	private void setUpScoreBox()
+	{
+		
+	}
+	
+	//todo: creates the main board to display the players progress.
+	private void setUpCanvas()
+	{
+		
+	}
+	
+	//todo: creates a queue that holds available tokens to be used.
+	private void setUpTokenQueue()
+	{
+		
+	}
+	
+	//todo: redraws the canvas.
+	public void repaint()
+	{
+		
 	}
 	
 	/**calculates the given players points and returns it.
