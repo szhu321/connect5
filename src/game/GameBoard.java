@@ -1,5 +1,7 @@
 package game;
 
+import main.Connect5;
+
 public class GameBoard implements GameConstants
 {
 	/**
@@ -13,15 +15,25 @@ public class GameBoard implements GameConstants
 	}
 	
 	//todo: places a token in a specified column.
-	public void placeToken(Token tk, int col)
+	public boolean placeToken(Token tk, int col)
 	{
-		
+		int row = getAvaliableRow(col);
+		if(row != -1)
+		{
+			tk.setX(col * 100 * Connect5.getScale());
+			tk.setY((gameBoard.length - 1 - row) * 100 * Connect5.getScale());
+			gameBoard[row][col] = tk;
+		}
+		return false;
 	}
 	
-	//todo: gets the row that is available in the given column.
+	//untested: gets the row that is available in the given column.
 	public int getAvaliableRow(int col)
 	{
-		return 0;
+		for(int row = 0; row < gameBoard.length; row++)
+			if(gameBoard[row][col] == null) // checks to see if the row is empty for a token to be placed.
+				return row;
+		return -1;
 	}
 	
 	//todo: moves all tokens into the correct position.
@@ -48,10 +60,12 @@ public class GameBoard implements GameConstants
 		
 	}
 	
-	//todo:remove all tokens
+	//remove all tokens
 	public void clearBoard()
 	{
-		
+		for(int row = 0; row < gameBoard.length; row++)
+			for(int col = 0; col < gameBoard[row].length; col++)
+				gameBoard[row][col] = null;
 	}
 	
 	public String toString()
@@ -60,7 +74,7 @@ public class GameBoard implements GameConstants
 		//goes through the row backwards to create the effect of the pieces dropping to the bottom.
 		for(int row = gameBoard.length - 1; row >= 0; row--)
 		{
-			for(int col = 0; col < gameBoard.length; col++)
+			for(int col = 0; col < gameBoard[row].length; col++)
 				result += gameBoard[row][col].toString();
 			result += "\n";
 		}

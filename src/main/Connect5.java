@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 
 public class Connect5 extends Application
 {
+	private static double scale = 1;
 	private Stage window;
 	private Scene scene;
 
@@ -18,5 +19,15 @@ public class Connect5 extends Application
 	public void start(Stage st)
 	{
 		window = st;
+	}
+	
+	public static double getScale()
+	{
+		return scale;
+	}
+	
+	public static void setScale(double scale)
+	{
+		Connect5.scale = scale;
 	}
 }
