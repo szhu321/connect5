@@ -2,6 +2,9 @@ package game;
 
 public class GameBoard implements GameConstants
 {
+	/**
+	 * 0,0 would be the bottom left of the board.
+	 */
 	private Token[][] gameBoard;
 	
 	public GameBoard()
@@ -49,5 +52,18 @@ public class GameBoard implements GameConstants
 	public void clearBoard()
 	{
 		
+	}
+	
+	public String toString()
+	{
+		String result = "";
+		//goes through the row backwards to create the effect of the pieces dropping to the bottom.
+		for(int row = gameBoard.length - 1; row >= 0; row--)
+		{
+			for(int col = 0; col < gameBoard.length; col++)
+				result += gameBoard[row][col].toString();
+			result += "\n";
+		}
+		return result;
 	}
 }

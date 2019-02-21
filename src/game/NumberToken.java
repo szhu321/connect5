@@ -12,4 +12,9 @@ public class NumberToken extends Token
 	}
 	
 	public int getNumber() {return number;}
+	
+	public String toString()
+	{
+		return number + "";
+	}
 }
