@@ -75,7 +75,12 @@ public class GameBoard implements GameConstants
 		for(int row = gameBoard.length - 1; row >= 0; row--)
 		{
 			for(int col = 0; col < gameBoard[row].length; col++)
-				result += gameBoard[row][col].toString();
+			{
+				if(gameBoard[row][col] == null)
+					result += "N";
+				else
+					result += gameBoard[row][col].toString();
+			}
 			result += "\n";
 		}
 		return result;
