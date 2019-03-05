@@ -55,9 +55,13 @@ public class GameBoard implements GameConstants
 	}
 	
 	//todo:removes a token from the given row and column.
-	public void removeToken(int row, int col)
+	public Token removeToken(int row, int col) throws IllegalArgumentException
 	{
-		
+		if(gameBoard[row][col] == null)
+			throw new IllegalArgumentException("There is no token here.");
+		Token tk = gameBoard[row][col];
+		gameBoard[row][col] = null;
+		return tk;
 	}
 	
 	//remove all tokens
@@ -77,9 +81,9 @@ public class GameBoard implements GameConstants
 			for(int col = 0; col < gameBoard[row].length; col++)
 			{
 				if(gameBoard[row][col] == null)
-					result += "N";
+					result += "N                 ";
 				else
-					result += gameBoard[row][col].toString();
+					result += gameBoard[row][col].toString() + " ";
 			}
 			result += "\n";
 		}

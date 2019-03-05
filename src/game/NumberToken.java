@@ -16,7 +16,7 @@ public class NumberToken extends Token
 	
 	public String toString()
 	{
-		return number + "";
+		return "Player:" + getPlayer() + " Number:" + number;
 	}
 	
 	public static NumberToken createNumberToken(int player, int number)
