@@ -45,7 +45,6 @@ public class Connect5 extends Application
 //		gb.clearBoard();
 		System.out.println(mg.getGame().getPlayerPile());
 		
-		
 		System.exit(0);
 	}
 	
@@ -53,6 +52,7 @@ public class Connect5 extends Application
 	{
 		return scale;
 	}
+	
 	
 	public static void setScale(double scale)
 	{
