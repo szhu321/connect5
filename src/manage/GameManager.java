@@ -1,5 +1,6 @@
 package manage;
 
+import game.GameSingle;
 import javafx.stage.Stage;
 
 public class GameManager extends Manager
@@ -7,8 +8,7 @@ public class GameManager extends Manager
 	
 	public GameManager(Stage window)
 	{
-		super(window);
-		
+		super(window, new GameSingle());
 	}
 
 	@Override

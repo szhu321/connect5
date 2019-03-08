@@ -23,6 +23,7 @@ public class GameBoard implements GameConstants
 			tk.setX(col * 100 * Connect5.getScale());
 			tk.setY((gameBoard.length - 1 - row) * 100 * Connect5.getScale());
 			gameBoard[row][col] = tk;
+			return true;
 		}
 		return false;
 	}
@@ -47,11 +48,14 @@ public class GameBoard implements GameConstants
 	{
 		
 	}
-	
-	//todo:checks to see if there is either a connect 5 or a full board.
-	public void checkGameOver()
+
+	public boolean isFull()
 	{
-		
+		for(Token[] tks: gameBoard)
+			for(Token tk: tks)
+				if(tk == null)
+					return false;
+		return true;
 	}
 	
 	//todo:removes a token from the given row and column.
@@ -86,6 +90,46 @@ public class GameBoard implements GameConstants
 					result += gameBoard[row][col].toString() + " ";
 			}
 			result += "\n";
+		}
+		return result;
+	}
+	
+	public Token getToken(int row, int col)
+	{
+		return gameBoard[row][col];
+	}
+	
+	public int rowSize()
+	{
+		return gameBoard.length;
+	}
+	
+	public int colSize()
+	{
+		return gameBoard[0].length;
+	}
+	
+	public int totalSize()
+	{
+		return rowSize() * colSize();
+	}
+	
+	/**
+	 * gets a integer representation of the player tokens.
+	 * @return a integer rep of the player tokens.
+	 */
+	public int[][] getPlayerGrid()
+	{
+		int[][] result = new int[gameBoard.length][gameBoard[0].length];
+		for(int row = 0; row < gameBoard.length; row++)
+		{
+			for(int col = 0; col < gameBoard[0].length; col++)
+			{
+				if(gameBoard[row][col] != null)
+					result[row][col] = gameBoard[row][col].getPlayer();
+				else
+					result[row][col] = VOID_PLAYER;
+			}
 		}
 		return result;
 	}

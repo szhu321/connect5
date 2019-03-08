@@ -18,9 +18,10 @@ public class NumberToken extends Token
 	{
 		return "Player:" + getPlayer() + " Number:" + number;
 	}
-	
-	public static NumberToken createNumberToken(int player, int number)
+
+	@Override
+	public int getPoints()
 	{
-		return new NumberToken(0, 0 , 100, 100, player, number);
+		return number;
 	}
 }

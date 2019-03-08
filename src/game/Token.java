@@ -15,4 +15,11 @@ public abstract class Token extends Sprite implements GameConstants
 	{
 		return player;
 	}
+	
+	public abstract int getPoints();
+	
+	public static NumberToken createNumberToken(int player, int number)
+	{
+		return new NumberToken(0, 0 , 100, 100, player, number);
+	}
 }

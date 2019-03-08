@@ -17,4 +17,6 @@ public class Test
 		gb.removeToken(5, 5);
 		System.out.println(gb);
 	}
+	
+	
 }
