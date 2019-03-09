@@ -23,11 +23,6 @@ public abstract class Token extends Sprite implements GameConstants
 	
 	public static NumberToken createNumberToken(int player, int number)
 	{
-		Image image;
-		if(player == PLAYER1)
-			image = ImageLoader.RED_BLANK;
-		else
-			image = ImageLoader.BLACK_BLANK;
-		return new NumberToken(image, 0, 0 , 100, 100, player, number);
+		return new NumberToken(ImageLoader.getTokenImagePlayer(player, number), 0, 0 , 100, 100, player, number);
 	}
 }

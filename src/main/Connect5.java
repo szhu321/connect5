@@ -28,6 +28,7 @@ public class Connect5 extends Application
 		ImageLoader.initImages();
 		manager = new GameManagerLocal(window);
 		window.show();
+		window.setResizable(false);
 		window.setOnCloseRequest(e -> System.exit(0));
 		
 		//Testing

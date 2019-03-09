@@ -46,6 +46,8 @@ public abstract class Game implements GameConstants
 	 */
 	public boolean isGameOver()
 	{
+//		System.out.println(gameBoard.isFull());
+//		System.out.println(isConnect5());
 		return gameBoard.isFull() || isConnect5();
 	}
 	
@@ -159,7 +161,7 @@ public abstract class Game implements GameConstants
 			for(int col = 0; col < gameBoard.colSize(); col++)
 			{
 				int player = tempBoard[row][col];
-				if(tempBoard[row + 1][col] == player
+				if(player != VOID_PLAYER && tempBoard[row + 1][col] == player
 						&& tempBoard[row + 2][col] == player && tempBoard[row + 3][col] == player
 						&& tempBoard[row + 4][col] == player )
 					return true;
@@ -170,7 +172,7 @@ public abstract class Game implements GameConstants
 			for(int col = 0; col < gameBoard.colSize() - 4; col++)
 			{
 				int player = tempBoard[row][col];
-				if(tempBoard[row][col + 1] == player
+				if(player != VOID_PLAYER && tempBoard[row][col + 1] == player
 						&& tempBoard[row][col + 2] == player && tempBoard[row][col + 3] == player
 						&& tempBoard[row][col + 4] == player)
 					return true;
@@ -181,7 +183,7 @@ public abstract class Game implements GameConstants
 			for(int col = 0; col < gameBoard.colSize() - 4; col++)
 			{
 				int player = tempBoard[row][col];
-				if(tempBoard[row + 1][col + 1] == player
+				if(player != VOID_PLAYER && tempBoard[row + 1][col + 1] == player
 						&& tempBoard[row + 2][col + 2] == player && tempBoard[row + 3][col + 3] == player
 						&& tempBoard[row + 4][col + 4] == player)
 					return true;
@@ -192,7 +194,7 @@ public abstract class Game implements GameConstants
 			for(int col = 3; col < gameBoard.colSize(); col++)
 			{
 				int player = tempBoard[row][col];
-				if(tempBoard[row + 1][col - 1] == player
+				if(player != VOID_PLAYER && tempBoard[row + 1][col - 1] == player
 						&& tempBoard[row + 2][col - 2] == player && tempBoard[row + 3][col - 3] == player
 						&& tempBoard[row + 4][col - 4] == player )
 					return true;

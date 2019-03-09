@@ -5,6 +5,7 @@ import game.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,6 +27,7 @@ public abstract class Manager implements GameConstants
 	private Canvas canvas;
 	private Canvas tokenQueue;
 	private Scene scene;
+	private GridPane root;
 	
 	//Gui Chunks
 	protected Label p1PtLbl;
@@ -35,6 +37,7 @@ public abstract class Manager implements GameConstants
 	
 	//backend
 	private Game game;
+	private boolean gameLoop;
 	
 	private int selected = -1;
 	
@@ -52,10 +55,11 @@ public abstract class Manager implements GameConstants
 		setUpCanvas();
 		setUpTokenQueue();
 		addAndDisplayNewScene();
+		gameLoop = true;
 		new Thread() {
 			public void run()
 			{
-				while(true)
+				while(gameLoop)
 				{
 					Platform.runLater(() -> updateGUI());
 					try {
@@ -111,6 +115,9 @@ public abstract class Manager implements GameConstants
 			game.calcPoints();
 			selected = -1;
 		}
+		//checks game over.
+		if(game.isGameOver())
+			stopGame();
 	}
 	
 	//todo: creates a queue that holds available tokens to be used.
@@ -190,7 +197,7 @@ public abstract class Manager implements GameConstants
 	 */
 	public void addAndDisplayNewScene()
 	{
-		GridPane root = new GridPane();
+		root = new GridPane();
 		scene = new Scene(root, 850, 800);
 		root.setHgap(20);
 		root.setVgap(20);
@@ -212,7 +219,23 @@ public abstract class Manager implements GameConstants
 		p2PtTxt.setText(game.getPlayer2Points() + "");
 	}
 	
+	public void stopGame()
+	{
+		canvas.setOnMouseClicked(e ->
+		{
+			//empty
+		});
+		tokenQueue.setOnMouseClicked(e ->
+		{
+			//empty
+		});
+	}
 	
+	public void restartGame(Game game)
+	{
+		this.game = game;
+		setUpGameScene();
+	}
 	
 	/**
 	 * Manages game over

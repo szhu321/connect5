@@ -1,9 +1,10 @@
 package animation;
 
+import game.GameConstants;
 import javafx.scene.image.Image;
 import main.Connect5;
 
-public class ImageLoader
+public class ImageLoader implements GameConstants
 {
 	public static Image RED_BLANK;
 	public static Image BLACK_BLANK;
@@ -33,5 +34,39 @@ public class ImageLoader
 		RED_3 = new Image("file:resources/images/tile_red_3.png", 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
 		BLACK_3 = new Image("file:resources/images/tile_black_3.png", 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
 		
+	}
+	
+	/**
+	 * Gets the image with the specified infomation.
+	 * @param player Either player1 or player2.
+	 * @param number The number of the token. 0, 1, 2, or 3.
+	 * @return The specified image.
+	 */
+	public static Image getTokenImagePlayer(int player, int number)
+	{
+		Image result;
+		if(player == PLAYER1)
+		{
+			switch(number)
+			{
+			case 0: result = RED_BLANK;break;
+			case 1: result = RED_1;break;
+			case 2: result = RED_2;break;
+			case 3: result = RED_3;break;
+			default: result = null;
+			}
+		}
+		else
+		{
+			switch(number)
+			{
+			case 0: result = BLACK_BLANK;break;
+			case 1: result = BLACK_1;break;
+			case 2: result = BLACK_2;break;
+			case 3: result = BLACK_3;break;
+			default: result = null;
+			}
+		}
+		return result;
 	}
 }
