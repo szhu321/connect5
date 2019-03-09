@@ -47,7 +47,7 @@ public class TokenPile
 		return (tokenLeft > 0) ? tokens[--tokenLeft] : null;
 	}
 	
-	public void collapseLeft()
+	private void collapseLeft()
 	{
 		for(int i = 0; i < currentHand.length - 1; i++)
 		{
@@ -72,7 +72,7 @@ public class TokenPile
 	 * 20% 1's 
 	 * rest 0's
 	 */
-	public void generateTokens()
+	private void generateTokens()
 	{
 		int tokensGenerated = 0;
 		while(tokensGenerated < .05 * size)
@@ -85,7 +85,7 @@ public class TokenPile
 			tokens[tokensGenerated++] = Token.createNumberToken(player, 0);
 	}
 	
-	public void shuffleTokens()
+	private void shuffleTokens()
 	{
 		for(int i = 0; i < tokens.length - 1; i++)
 		{
@@ -118,7 +118,7 @@ public class TokenPile
 	{
 		if(currentHand[idx] == null)
 			throw new IllegalArgumentException("There is no token at index " + idx);
-		Token result = currentHand[idx] = null;
+		Token result = currentHand[idx];
 		currentHand[idx] = null;
 		return result;
 	}

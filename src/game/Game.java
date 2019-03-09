@@ -5,12 +5,13 @@ public abstract class Game implements GameConstants
 {
 	protected boolean myTurn;
 	private TokenPile playerPile;
-	private GameBoard gameBoard = new GameBoard();
+	private GameBoard gameBoard;
 	private int player1Points;
 	private int player2Points;
 	
 	public Game()
 	{
+		gameBoard = new GameBoard();
 		playerPile = new TokenPile(PLAYER1, getTokenCount());
 	}
 	
@@ -30,10 +31,7 @@ public abstract class Game implements GameConstants
 	 * @return if successfully placed return true and set myTurn to false. 
 	 * else return false.
 	 */
-	public boolean placeToken(Token tk, int col)
-	{
-		return gameBoard.placeToken(tk, col)?!(myTurn = false):false;
-	}
+	public abstract boolean placeToken(int handIdx, int col);
 	
 	/**
 	 * Swaps the turn

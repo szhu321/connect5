@@ -1,13 +1,16 @@
 package game;
 
+import animation.ImageLoader;
+import javafx.scene.image.Image;
+
 public abstract class Token extends Sprite implements GameConstants
 {
 	private static final long serialVersionUID = -9077762852402278129L;
 	private int player;
 	
-	public Token(String name, String imgFileName, double x, double y, double width, double height, int player)
+	public Token(String name, Image image, double x, double y, double width, double height, int player)
 	{
-		super(name, imgFileName, x, y, width, height, 0);
+		super(name, image, x, y, width, height, 0);
 		this.player = player;
 	}
 	
@@ -20,6 +23,11 @@ public abstract class Token extends Sprite implements GameConstants
 	
 	public static NumberToken createNumberToken(int player, int number)
 	{
-		return new NumberToken(0, 0 , 100, 100, player, number);
+		Image image;
+		if(player == PLAYER1)
+			image = ImageLoader.RED_BLANK;
+		else
+			image = ImageLoader.BLACK_BLANK;
+		return new NumberToken(image, 0, 0 , 100, 100, player, number);
 	}
 }

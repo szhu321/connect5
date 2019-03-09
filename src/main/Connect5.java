@@ -1,5 +1,9 @@
 package main;
 
+import animation.ImageLoader;
+import game.GameBoard;
+import game.GameConstants;
+import game.NumberToken;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import manage.*;
@@ -7,7 +11,7 @@ import manage.Manager;
 
 public class Connect5 extends Application
 {
-	private static double scale = 1;
+	private static double scale = .7;
 	private Stage window;
 	private Manager manager;
 
@@ -21,12 +25,13 @@ public class Connect5 extends Application
 	{
 		window = st;
 		window.setTitle("Connect 5");
+		ImageLoader.initImages();
 		manager = new GameManagerLocal(window);
 		window.show();
-		
+		window.setOnCloseRequest(e -> System.exit(0));
 		
 		//Testing
-//		GameBoard gb = mg.getGame().getGameBoard();
+//		GameBoard gb = manager.getGame().getGameBoard();
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
@@ -34,12 +39,11 @@ public class Connect5 extends Application
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 3);
 //		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 4);
-//		mg.getGame().calcPoints();
-//		mg.updateScoreBox();
+//		manager.getGame().calcPoints();
+//		manager.updateGUI();
 //		
-//		System.out.println(mg);
-//		gb.clearBoard();
-		System.out.println(manager.getGame().getPlayerPile());
+//		System.out.println(manager.getGame().getPlayerPile());
+//		System.out.println(manager);
 		
 		//System.exit(0);
 	}

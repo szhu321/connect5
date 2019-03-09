@@ -9,7 +9,6 @@ public abstract class Sprite implements Serializable
 	private static final long serialVersionUID = 9190247812115625938L;
 
 	private String name;
-	private String imgFileName;
 	private Image image;
 	private double x;
 	private double y;
@@ -19,21 +18,15 @@ public abstract class Sprite implements Serializable
 	
 	private boolean visible;
 	
-	public Sprite(String name, String imgFileName, double x, double y, double width, double height, double faceAngle)
+	public Sprite(String name, Image image, double x, double y, double width, double height, double faceAngle)
 	{
 		this.name = name;
-		this.imgFileName = imgFileName;
+		this.image = image;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		visible = true;
-		createImage();
-	}
-	
-	public void createImage()
-	{
-		image = new Image(imgFileName, width, height, false, true);
 	}
 
 	//getters and setters

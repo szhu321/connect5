@@ -58,6 +58,11 @@ public class GameBoard implements GameConstants
 		return true;
 	}
 	
+	public boolean isColFull(int col)
+	{
+		return gameBoard[gameBoard.length - 1][col] != null;
+	}
+	
 	//todo:removes a token from the given row and column.
 	public Token removeToken(int row, int col) throws IllegalArgumentException
 	{
@@ -137,9 +142,10 @@ public class GameBoard implements GameConstants
 	public Token[] getTokenCopy()
 	{
 		Token[] result = new Token[gameBoard.length * gameBoard[0].length];
+		int counter = 0;
 		for(int i = 0; i < gameBoard.length; i++)
 			for(int j = 0; j < gameBoard[0].length; j++)
-				result[i * j] = gameBoard[i][j];
+				result[counter++] = gameBoard[i][j];
 		return result;
 	}
 }

@@ -1,7 +1,8 @@
 package manage;
 
-import animatioon.ImageLoader;
+import animation.ImageLoader;
 import game.*;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -35,6 +36,8 @@ public abstract class Manager implements GameConstants
 	//backend
 	private Game game;
 	
+	private int selected = -1;
+	
 	public Manager(Stage window, Game game)
 	{
 		this.window = window;
@@ -49,7 +52,20 @@ public abstract class Manager implements GameConstants
 		setUpCanvas();
 		setUpTokenQueue();
 		addAndDisplayNewScene();
-		updateGUI();
+		new Thread() {
+			public void run()
+			{
+				while(true)
+				{
+					Platform.runLater(() -> updateGUI());
+					try {
+						Thread.sleep(34);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 	
 	//todo: creates labels to display both players scores.
@@ -75,13 +91,54 @@ public abstract class Manager implements GameConstants
 	//todo: creates the main board to display the players progress.
 	private void setUpCanvas()
 	{
-		canvas = new Canvas(800, 800);
+		canvas = new Canvas(game.getGameBoard().colSize() * 100 * Connect5.getScale(), game.getGameBoard().rowSize() * 100 * Connect5.getScale());
+		canvas.setOnMouseClicked(e ->
+		{
+			placeToken(e.getX());
+		});
+	}
+	
+	private void placeToken(double x)
+	{
+		if(selected == -1) //no token is selected
+			return;
+		int col = (int)(x / (100 * Connect5.getScale()));
+		if(game.getGameBoard().isColFull(col)) //selected column is full
+			return;
+
+		if(game.placeToken(selected, col))
+		{
+			game.calcPoints();
+			selected = -1;
+		}
 	}
 	
 	//todo: creates a queue that holds available tokens to be used.
 	private void setUpTokenQueue()
 	{
 		tokenQueue = new Canvas(350, 120);
+		tokenQueue.setOnMouseClicked(e ->
+		{
+			selectTokenQueue(e.getX(),e.getY());
+		});
+	}
+	
+	private void selectTokenQueue(double x, double y)
+	{
+		x -= 25;
+		y -= 10;
+		
+		int select = -1;
+		for(int i = 0; i < game.getOnScreenTokenPile().getCurrentHandCopy().length; i++)
+		{
+			if(x < 100 + (100 * i) && x > (100 * i) && y > 0 && y < 100)
+				select = i;
+		}
+		if(select == selected)
+			selected = -1;
+		else
+			selected = select;
+		//System.out.println(selected);
 	}
 	
 	//todo: redraws the canvas.
@@ -100,16 +157,15 @@ public abstract class Manager implements GameConstants
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
 		
-		//draws the tokens.
-		for(Token token: game.getGameBoard().getTokenCopy())
-			if(token != null)
-				gc.drawImage(token.getImage(), token.getX(), token.getY());
-		
 		//draws the board.
 		for(int x = 0; x < game.getGameBoard().rowSize(); x++)
 			for(int y = 0; y < game.getGameBoard().colSize(); y++)
 				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
 		
+		//draws the tokens.
+		for(Token token: game.getGameBoard().getTokenCopy())
+			if(token != null)
+				gc.drawImage(token.getImage(), token.getX(), token.getY());
 	}
 	
 	public void updateTokenQueue()
@@ -120,27 +176,30 @@ public abstract class Manager implements GameConstants
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
-		
 		Token[] tq = game.getOnScreenTokenPile().getCurrentHandCopy();
 		for(int i = 0; i < tq.length; i++)
-			gc.drawImage(tq[i].getImage(), 25 + (i * 100), 10);
+		{
+			if(tq[i] != null)
+				gc.drawImage(tq[i].getImage(), 25 + (i * 100), 10, i == selected ? 100: 90,  i == selected ? 100: 90);
+		}
 	}
+		
 	
 	/**
 	 * Creates a new scene and displays it on the window.
 	 */
 	public void addAndDisplayNewScene()
 	{
-		BorderPane root = new BorderPane();
-		scene = new Scene(root, 1000, 800);
-		root.setMinHeight(800);
-		root.setMinWidth(1000);
+		GridPane root = new GridPane();
+		scene = new Scene(root, 850, 800);
+		root.setHgap(20);
+		root.setVgap(20);
 		root.setPadding(new Insets(20, 20, 20, 20));
 		
 		//adding stuff to scene
-		root.setRight(scoreBox);
-		root.setCenter(canvas);
-		root.setBottom(tokenQueue);
+		root.add(scoreBox, 1, 0);
+		root.add(canvas, 0, 0);
+		root.add(tokenQueue, 0, 1);
 		
 		
 		//set scene to window

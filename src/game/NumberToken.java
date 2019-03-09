@@ -1,6 +1,7 @@
 package game;
 
-import animatioon.ImageLoader;
+import animation.ImageLoader;
+import javafx.scene.image.Image;
 
 public class NumberToken extends Token
 {
@@ -8,9 +9,9 @@ public class NumberToken extends Token
 	
 	private int number;
 
-	public NumberToken(double x, double y, double width, double height, int player, int number)
+	public NumberToken(Image image, double x, double y, double width, double height, int player, int number)
 	{
-		super("Number Token", "file:resources/images/tile_red.png", x, y, width, height, player);
+		super("Number Token", image, x, y, width, height, player);
 		this.number = number;
 	}
 	
