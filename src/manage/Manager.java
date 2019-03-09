@@ -1,5 +1,6 @@
 package manage;
 
+import animatioon.ImageLoader;
 import game.*;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -11,8 +12,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.Connect5;
 
 public abstract class Manager implements GameConstants
 {
@@ -20,7 +23,7 @@ public abstract class Manager implements GameConstants
 	private Stage window;
 	private GridPane scoreBox;
 	private Canvas canvas;
-	private HBox tokenQueue;
+	private Canvas tokenQueue;
 	private Scene scene;
 	
 	//Gui Chunks
@@ -46,6 +49,7 @@ public abstract class Manager implements GameConstants
 		setUpCanvas();
 		setUpTokenQueue();
 		addAndDisplayNewScene();
+		updateGUI();
 	}
 	
 	//todo: creates labels to display both players scores.
@@ -77,13 +81,49 @@ public abstract class Manager implements GameConstants
 	//todo: creates a queue that holds available tokens to be used.
 	private void setUpTokenQueue()
 	{
-		tokenQueue = new HBox(20);
+		tokenQueue = new Canvas(350, 120);
 	}
 	
 	//todo: redraws the canvas.
-	public void repaint()
+	public void updateGUI()
 	{
+		updateGameBoard();
+		updateTokenQueue();
+		updateScoreBox();
+	}
+	
+	public void updateGameBoard()
+	{
+		//repaints the board.
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.setFill(Color.BLACK);
+		
+		//draws the tokens.
+		for(Token token: game.getGameBoard().getTokenCopy())
+			if(token != null)
+				gc.drawImage(token.getImage(), token.getX(), token.getY());
+		
+		//draws the board.
+		for(int x = 0; x < game.getGameBoard().rowSize(); x++)
+			for(int y = 0; y < game.getGameBoard().colSize(); y++)
+				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
+		
+	}
+	
+	public void updateTokenQueue()
+	{
+		//repaints the tokenQueue.
+		GraphicsContext gc = tokenQueue.getGraphicsContext2D();
+		//clears the queue.
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		gc.setFill(Color.BLACK);
+		
+		Token[] tq = game.getOnScreenTokenPile().getCurrentHandCopy();
+		for(int i = 0; i < tq.length; i++)
+			gc.drawImage(tq[i].getImage(), 25 + (i * 100), 10);
 	}
 	
 	/**
@@ -115,11 +155,10 @@ public abstract class Manager implements GameConstants
 	
 	
 	
-	/**checks to see if the game is over and returns the winning player.
-	 * 
-	 * @return the winning player.
+	/**
+	 * Manages game over
 	 */
-	public abstract int checkGameOver();
+	public abstract void gameOver();
 	
 	public Stage getWindow()
 	{

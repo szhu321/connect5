@@ -1,19 +1,15 @@
 package main;
 
-import game.GameBoard;
-import game.GameConstants;
-import game.NumberToken;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import manage.GameManager;
+import manage.*;
 import manage.Manager;
 
 public class Connect5 extends Application
 {
 	private static double scale = 1;
 	private Stage window;
+	private Manager manager;
 
 	public static void main(String[] args)
 	{
@@ -25,8 +21,8 @@ public class Connect5 extends Application
 	{
 		window = st;
 		window.setTitle("Connect 5");
-		Manager mg = new GameManager(window);
-		//window.show();
+		manager = new GameManagerLocal(window);
+		window.show();
 		
 		
 		//Testing
@@ -43,19 +39,12 @@ public class Connect5 extends Application
 //		
 //		System.out.println(mg);
 //		gb.clearBoard();
-		System.out.println(mg.getGame().getPlayerPile());
+		System.out.println(manager.getGame().getPlayerPile());
 		
-		System.exit(0);
-	}
-	
-	public static double getScale()
-	{
-		return scale;
+		//System.exit(0);
 	}
 	
 	
-	public static void setScale(double scale)
-	{
-		Connect5.scale = scale;
-	}
+	public static double getScale(){return scale;}
+	public static void setScale(double scale){Connect5.scale = scale;}
 }

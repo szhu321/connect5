@@ -10,8 +10,8 @@ public interface GameConstants
 	public static final int PLAYER1_WIN_STATUS = 1;
 	public static final int PLAYER2_WIN_STATUS = 2;
 	
-	public static final int SIZE_ROW = 8;
-	public static final int SIZE_COL = 9;
+	public static final int SIZE_ROW = 7;
+	public static final int SIZE_COL = 8;
 	
 	public static final String PLAYER1_IMAGE_FILE = "";
 	

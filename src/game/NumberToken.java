@@ -1,5 +1,7 @@
 package game;
 
+import animatioon.ImageLoader;
+
 public class NumberToken extends Token
 {
 	private static final long serialVersionUID = 6585671174319245550L;
@@ -8,7 +10,7 @@ public class NumberToken extends Token
 
 	public NumberToken(double x, double y, double width, double height, int player, int number)
 	{
-		super("Number Token", null, x, y, width, height, player);
+		super("Number Token", "file:resources/images/tile_red.png", x, y, width, height, player);
 		this.number = number;
 	}
 	

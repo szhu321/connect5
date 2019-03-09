@@ -28,6 +28,7 @@ public abstract class Sprite implements Serializable
 		this.width = width;
 		this.height = height;
 		visible = true;
+		createImage();
 	}
 	
 	public void createImage()

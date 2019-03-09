@@ -133,4 +133,13 @@ public class GameBoard implements GameConstants
 		}
 		return result;
 	}
+	
+	public Token[] getTokenCopy()
+	{
+		Token[] result = new Token[gameBoard.length * gameBoard[0].length];
+		for(int i = 0; i < gameBoard.length; i++)
+			for(int j = 0; j < gameBoard[0].length; j++)
+				result[i * j] = gameBoard[i][j];
+		return result;
+	}
 }

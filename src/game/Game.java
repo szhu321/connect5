@@ -15,6 +15,15 @@ public abstract class Game implements GameConstants
 	}
 	
 	/**
+	 * Gets the token pile that should be currently be displayed.
+	 * @return Current TokenPile.
+	 */
+	public TokenPile getOnScreenTokenPile()
+	{
+		return playerPile;
+	}
+	
+	/**
 	 * Adds a token to the game board.
 	 * @param tk - The token to be added.
 	 * @param col - The column to add it in.
@@ -26,6 +35,13 @@ public abstract class Game implements GameConstants
 		return gameBoard.placeToken(tk, col)?!(myTurn = false):false;
 	}
 	
+	/**
+	 * Swaps the turn
+	 */
+	public void swapTurn()
+	{
+		myTurn = !myTurn;
+	}
 	
 	/**
 	 * Checks to see if there is either a connect 5 or a full board.
