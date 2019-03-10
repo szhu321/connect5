@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Connect5;
 
-public abstract class Manager implements GameConstants
+public class Manager implements GameConstants
 {
 	//Gui
 	private Stage window;
@@ -38,14 +38,26 @@ public abstract class Manager implements GameConstants
 	//backend
 	private Game game;
 	private boolean gameLoop;
-	
+	private int gameType;
 	private int selected = -1;
 	
-	public Manager(Stage window, Game game)
+	public Manager(Stage window, int gameType)
 	{
 		this.window = window;
-		this.game = game;
+		this.gameType = gameType;
+		newGame();
 		setUpGameScene();
+	}
+	
+	public void newGame()
+	{
+		switch(gameType)
+		{
+		case LOCAL_GAME: game = new GameLocal(); break;
+		case SINGLE_GAME: game = new GameSingle(); break;
+		case ONLINE_GAME: game = new GameMulti(); break;
+		default : game = null;
+		}
 	}
 	
 	//todo: creates the canvas 
@@ -122,7 +134,7 @@ public abstract class Manager implements GameConstants
 		}
 		//checks game over.
 		if(game.isGameOver())
-			stopGame();
+			gameOver();
 	}
 	
 	//todo: creates a queue that holds available tokens to be used.
@@ -236,16 +248,19 @@ public abstract class Manager implements GameConstants
 		});
 	}
 	
-	public void restartGame(Game game)
+	public void restartGame()
 	{
-		this.game = game;
+		newGame();
 		setUpGameScene();
 	}
 	
 	/**
 	 * Manages game over
 	 */
-	public abstract void gameOver();
+	public void gameOver()
+	{
+		stopGame();
+	}
 	
 	public Stage getWindow()
 	{

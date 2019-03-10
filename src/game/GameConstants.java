@@ -19,4 +19,9 @@ public interface GameConstants
 	public static final int SERVER_TOKEN = 10;
 	public static final int SERVER_STATUS = 11;
 	
+	//types of games
+	public static final int LOCAL_GAME = 5;
+	public static final int SINGLE_GAME = 6;
+	public static final int ONLINE_GAME = 7;
+	
 }

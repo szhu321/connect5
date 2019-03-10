@@ -2,12 +2,11 @@ package game;
 
 public class GameSingle extends Game
 {
-	private TokenPile cpuPlie;
+	private TokenPile cpuPile;
 	
 	public GameSingle()
 	{
-		super();
-		
+		cpuPile = new TokenPile(PLAYER2);
 	}
 
 	@Override
