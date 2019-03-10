@@ -13,11 +13,11 @@ public class TokenPile
 	 * @param player The player of this token pile.
 	 * @param size This size of this token pile.
 	 */
-	public TokenPile(int player, int size)
+	public TokenPile(int player)
 	{
-		this.size = size;
+		size = 10;
 		this.player = player;
-		tokens = new Token[this.size];
+		tokens = new Token[size];
 		tokenLeft = size;
 		
 		generateTokens();
@@ -44,7 +44,13 @@ public class TokenPile
 	 */
 	private Token popMasterList()
 	{
-		return (tokenLeft > 0) ? tokens[--tokenLeft] : null;
+		if(tokenLeft <= 0)
+		{
+			generateTokens();
+			shuffleTokens();
+			tokenLeft = size;
+		}
+		return tokens[--tokenLeft];
 	}
 	
 	private void collapseLeft()

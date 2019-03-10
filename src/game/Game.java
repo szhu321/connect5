@@ -12,7 +12,7 @@ public abstract class Game implements GameConstants
 	public Game()
 	{
 		gameBoard = new GameBoard();
-		playerPile = new TokenPile(PLAYER1, getTokenCount());
+		playerPile = new TokenPile(PLAYER1);
 	}
 	
 	/**

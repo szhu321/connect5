@@ -56,6 +56,7 @@ public abstract class Manager implements GameConstants
 		setUpTokenQueue();
 		addAndDisplayNewScene();
 		gameLoop = true;
+		//runs the gameloop
 		new Thread() {
 			public void run()
 			{
@@ -72,7 +73,9 @@ public abstract class Manager implements GameConstants
 		}.start();
 	}
 	
-	//todo: creates labels to display both players scores.
+	/**
+	 * creates labels to display both players scores.
+	 */
 	private void setUpScoreBox()
 	{
 		scoreBox = new GridPane();
@@ -80,8 +83,8 @@ public abstract class Manager implements GameConstants
 		scoreBox.setVgap(20);
 		
 		//labels for the scores
-		p1PtLbl = new Label("Player 1:");
-		p2PtLbl = new Label("Player 2:");
+		p1PtLbl = new Label("Red  :");
+		p2PtLbl = new Label("Black:");
 		p1PtTxt = new Text(game.getPlayer1Points() + "");
 		p2PtTxt = new Text(game.getPlayer2Points() + "");
 		
@@ -92,7 +95,9 @@ public abstract class Manager implements GameConstants
 		scoreBox.add(p2PtTxt, 1, 1);
 	}
 	
-	//todo: creates the main board to display the players progress.
+	/**
+	 * creates the main board to display the players progress.
+	 */
 	private void setUpCanvas()
 	{
 		canvas = new Canvas(game.getGameBoard().colSize() * 100 * Connect5.getScale(), game.getGameBoard().rowSize() * 100 * Connect5.getScale());

@@ -6,7 +6,7 @@ public class GameLocal extends Game
 	
 	public GameLocal()
 	{
-		player2Pile = new TokenPile(PLAYER2, getTokenCount());
+		player2Pile = new TokenPile(PLAYER2);
 	}
 	
 	public TokenPile getOnScreenTokenPile()
