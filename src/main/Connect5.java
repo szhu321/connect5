@@ -30,23 +30,6 @@ public class Connect5 extends Application
 		window.show();
 		window.setResizable(false);
 		window.setOnCloseRequest(e -> System.exit(0));
-		
-		//Testing
-//		GameBoard gb = manager.getGame().getGameBoard();
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 3);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 4);
-//		manager.getGame().calcPoints();
-//		manager.updateGUI();
-//		
-//		System.out.println(manager.getGame().getPlayerPile());
-//		System.out.println(manager);
-		
-		//System.exit(0);
 	}
 	
 	
