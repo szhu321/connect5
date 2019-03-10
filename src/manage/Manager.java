@@ -22,7 +22,6 @@ import main.Connect5;
 public class Manager implements GameConstants
 {
 	//Gui
-	private Stage window;
 	private GridPane scoreBox;
 	private Canvas canvas;
 	private Canvas tokenQueue;
@@ -41,9 +40,8 @@ public class Manager implements GameConstants
 	private int gameType;
 	private int selected = -1;
 	
-	public Manager(Stage window, int gameType)
+	public Manager(int gameType)
 	{
-		this.window = window;
 		this.gameType = gameType;
 		newGame();
 		setUpGameScene();
@@ -60,13 +58,15 @@ public class Manager implements GameConstants
 		}
 	}
 	
-	//todo: creates the canvas 
+	/**
+	 * creates the canvas 
+	 */
 	private void setUpGameScene()
 	{
 		setUpScoreBox();
 		setUpCanvas();
 		setUpTokenQueue();
-		addAndDisplayNewScene();
+		createNewScene();
 		gameLoop = true;
 		//runs the gameloop
 		new Thread() {
@@ -137,7 +137,9 @@ public class Manager implements GameConstants
 			gameOver();
 	}
 	
-	//todo: creates a queue that holds available tokens to be used.
+	/**
+	 * creates a queue that holds available tokens to be used.
+	 */
 	private void setUpTokenQueue()
 	{
 		tokenQueue = new Canvas(350, 120);
@@ -147,6 +149,11 @@ public class Manager implements GameConstants
 		});
 	}
 	
+	/**
+	 * Called when the user chooses a token to use.
+	 * @param x X location of the token on the token queue.
+	 * @param y Y location of the token on the token queue.
+	 */
 	private void selectTokenQueue(double x, double y)
 	{
 		x -= 25;
@@ -173,6 +180,9 @@ public class Manager implements GameConstants
 		updateScoreBox();
 	}
 	
+	/**
+	 * Erase and draw on the playing board.
+	 */
 	public void updateGameBoard()
 	{
 		//repaints the board.
@@ -192,6 +202,9 @@ public class Manager implements GameConstants
 				gc.drawImage(token.getImage(), token.getX(), token.getY());
 	}
 	
+	/**
+	 * Erase and draw on the token queue.
+	 */
 	public void updateTokenQueue()
 	{
 		//repaints the tokenQueue.
@@ -210,12 +223,13 @@ public class Manager implements GameConstants
 		
 	
 	/**
-	 * Creates a new scene and displays it on the window.
+	 * Creates a new scene.
 	 */
-	public void addAndDisplayNewScene()
+	public void createNewScene()
 	{
+		//setting up the new scene.
 		root = new GridPane();
-		scene = new Scene(root, 850, 800);
+		scene = new Scene(root, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
 		root.setHgap(20);
 		root.setVgap(20);
 		root.setPadding(new Insets(20, 20, 20, 20));
@@ -224,10 +238,6 @@ public class Manager implements GameConstants
 		root.add(scoreBox, 1, 0);
 		root.add(canvas, 0, 0);
 		root.add(tokenQueue, 0, 1);
-		
-		
-		//set scene to window
-		window.setScene(scene);
 	}
 	
 	public void updateScoreBox()
@@ -262,14 +272,14 @@ public class Manager implements GameConstants
 		stopGame();
 	}
 	
-	public Stage getWindow()
-	{
-		return window;
-	}
-	
 	public Game getGame()
 	{
 		return game;
+	}
+	
+	public Scene getScene()
+	{
+		return scene;
 	}
 	
 	public String toString()
