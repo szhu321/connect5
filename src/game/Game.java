@@ -191,7 +191,7 @@ public abstract class Game implements GameConstants
 		
 		//connect 5 Up Left
 		for(int row = 0; row < gameBoard.rowSize() - 4; row++)
-			for(int col = 3; col < gameBoard.colSize(); col++)
+			for(int col = 4; col < gameBoard.colSize(); col++)
 			{
 				int player = tempBoard[row][col];
 				if(player != VOID_PLAYER && tempBoard[row + 1][col - 1] == player
