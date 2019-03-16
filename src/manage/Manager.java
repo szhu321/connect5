@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Connect5;
@@ -198,6 +199,7 @@ public class Manager implements GameConstants
 	{
 		//repaints the board.
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.save();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
@@ -208,9 +210,21 @@ public class Manager implements GameConstants
 				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
 		
 		//draws the tokens.
+		
+		gc.setFont(new Font("impact", 26));
 		for(Token token: game.getGameBoard().getTokenCopy())
 			if(token != null)
+			{
 				gc.drawImage(token.getImage(), token.getX(), token.getY());
+				//draws the number on the token
+				if(token.getPoints() != 0)
+				{
+					gc.setFill((token.getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
+					gc.fillText(token.getPoints() + "", token.getX() + 30, token.getY() + 48);
+				}
+					
+			}
+		gc.restore();
 	}
 	
 	/**
@@ -225,10 +239,23 @@ public class Manager implements GameConstants
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
 		Token[] tq = game.getOnScreenTokenPile().getCurrentHandCopy();
+		
+		
 		for(int i = 0; i < tq.length; i++)
 		{
 			if(tq[i] != null)
-				gc.drawImage(tq[i].getImage(), 25 + (i * 100), 10, i == selected ? 100: 90,  i == selected ? 100: 90);
+			{
+				if(i == selected)
+					gc.drawImage(tq[i].getImage(), 20 + (i * 100), 5,100,100);
+				else
+					gc.drawImage(tq[i].getImage(), 25 + (i * 100), 10,90,90);
+				if(tq[i].getPoints() != 0) //paints the number on 
+				{
+					gc.setFont(new Font("impact", (i == selected) ? 31 : 30));
+					gc.setFill((tq[i].getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
+					gc.fillText(tq[i].getPoints() + "", 65 + (i * 100), 70);
+				}
+			}
 		}
 	}
 		
