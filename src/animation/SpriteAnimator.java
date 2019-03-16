@@ -32,6 +32,7 @@ public class SpriteAnimator
 			{
 				for(int i = spriteWrapper.size() - 1; i >= 0; i--)
 				{
+					//System.out.println("Tick " + i);
 					SpriteWrapper temp = spriteWrapper.get(i);
 					temp.run();
 					if(temp.getDone())

@@ -19,13 +19,13 @@ public class FloatDrop extends GravityDrop
 			yCurrent += speed;
 			if(yCurrent > yEnd)
 			{
-				yCurrent += 5;
+				yCurrent += (speed / 2) + 3; //dip amount
 				passed = true;
 			}
 		}
 		else
 		{
-			yCurrent -= (yCurrent - yEnd) * .2;
+			yCurrent -= (yCurrent - yEnd) * .2; //tweening algorithm
 			if(yCurrent < (yEnd + 1))
 			{
 				yCurrent = yEnd;

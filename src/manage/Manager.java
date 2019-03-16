@@ -243,7 +243,7 @@ public class Manager implements GameConstants
 		
 		for(int i = 0; i < tq.length; i++)
 		{
-			if(tq[i] != null)
+			if(tq[i] != null) //if there is nothing on this token queue slot skip it.
 			{
 				if(i == selected)
 					gc.drawImage(tq[i].getImage(), 20 + (i * 100), 5,100,100);
