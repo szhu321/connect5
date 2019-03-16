@@ -17,7 +17,7 @@ public class GameLocal extends Game
 	}
 
 	@Override
-	public boolean placeToken(int handIdx, int col)
+	public Token placeToken(int handIdx, int col)
 	{
 		Token tk = myTurn ? getPlayerPile().getToken(handIdx) : player2Pile.getToken(handIdx);	
 		if(getGameBoard().placeToken(tk, col))
@@ -25,8 +25,8 @@ public class GameLocal extends Game
 			myTurn = !myTurn;
 			getPlayerPile().populateHand(); //add a new token to the hand.
 			player2Pile.populateHand();
-			return true;
+			return tk;
 		}
-		return false;
+		return null;
 	}
 }

@@ -3,14 +3,54 @@ package animation;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.GameConstants;
 import game.Sprite;
 
 public class SpriteAnimator
 {
-	private static List<Sprite> sprites;
+	private List<SpriteWrapper> spriteWrapper;
+	private boolean running;
 	
 	public SpriteAnimator()
 	{
-		sprites = new ArrayList<Sprite>();
+		spriteWrapper = new ArrayList<SpriteWrapper>();
+		running = true;
+		startNewTimer();
+	}
+	
+	public void addSpriteWrapper(SpriteWrapper sw)
+	{
+		spriteWrapper.add(sw);
+	}
+	
+	public void startNewTimer()
+	{
+		new Thread(() ->
+		{
+			running = true;
+			while(running)
+			{
+				for(int i = spriteWrapper.size() - 1; i >= 0; i--)
+				{
+					SpriteWrapper temp = spriteWrapper.get(i);
+					temp.run();
+					if(temp.getDone())
+						spriteWrapper.remove(temp);
+				}
+				try {
+					Thread.sleep(GameConstants.SLEEP_MILITIME);
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
+	
+	/**
+	 * Stops the timer. There may be a problem if a new timer is created to soon after invoking this method.
+	 */
+	public void stopTimer()
+	{
+		running = false;
 	}
 }

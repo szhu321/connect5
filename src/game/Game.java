@@ -28,10 +28,10 @@ public abstract class Game implements GameConstants
 	 * Adds a token to the game board.
 	 * @param tk - The token to be added.
 	 * @param col - The column to add it in.
-	 * @return if successfully placed return true and set myTurn to false. 
-	 * else return false.
+	 * @return if successfully placed return the placed token and set myTurn to false. 
+	 * else return null.
 	 */
-	public abstract boolean placeToken(int handIdx, int col);
+	public abstract Token placeToken(int handIdx, int col);
 	
 	/**
 	 * Swaps the turn

@@ -4,41 +4,54 @@ import game.Sprite;
 
 public class GravityDrop extends SpriteWrapper
 {
-	protected static final double GRAVITY = 10;
-	private double speed;
+	protected static final double GRAVITY = .2;
+	double speed;
 	
-	private double xStart;
-	private double yStart;
+	double yStart;
+	double yEnd;
+	double yCurrent;
 	
-	private double yEnd;
-	private double xEnd;
-	
-	private double xCurrent;
-	private double yCurrent;
-	
-	public GravityDrop(Sprite sprite, double xStart, double yStart)
+	public GravityDrop(Sprite sprite, double yStart)
 	{
 		super(sprite);
-		speed = 100;
-		this.xEnd = getMainSprite().getX();
+		speed = 0;
 		this.yEnd = getMainSprite().getY();
-		this.xStart = xStart;
 		this.yStart = yStart;
-		xCurrent = xStart;
-		yCurrent = xStart;
+		yCurrent = yStart;
+		setSpriteLocation(getMainSprite().getX(), yStart);
 	}
 
 	@Override
 	public void run()
 	{
-		
-		
+		caculateNewLocation();
+		changeSpeed();
 		setSpriteLocation();
+	}
+	
+	public void changeSpeed()
+	{
+		speed += GRAVITY;
+	}
+	
+	public void caculateNewLocation()
+	{
+		yCurrent += speed;
+		if(yCurrent > yEnd)
+		{
+			yCurrent = yEnd;
+			setDone(true);
+		}
 	}
 	
 	public void setSpriteLocation()
 	{
-		getMainSprite().setX(xCurrent);
 		getMainSprite().setY(yCurrent);
+	}
+	
+	public void setSpriteLocation(double x, double y)
+	{
+		getMainSprite().setX(x);
+		getMainSprite().setY(y);
 	}
 }

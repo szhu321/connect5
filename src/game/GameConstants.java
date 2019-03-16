@@ -2,6 +2,8 @@ package game;
 
 public interface GameConstants
 {
+	public static final long SLEEP_MILITIME = 17;
+	
 	public static final int PLAYER1 = 1;
 	public static final int PLAYER2 = 2;
 	public static final int VOID_PLAYER = 0;

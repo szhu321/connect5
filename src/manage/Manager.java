@@ -1,6 +1,10 @@
 package manage;
 
+import animation.FloatDrop;
+import animation.GravityDrop;
 import animation.ImageLoader;
+import animation.SpriteAnimator;
+import animation.SpriteWrapper;
 import game.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -40,6 +44,9 @@ public class Manager implements GameConstants
 	private int gameType;
 	private int selected = -1;
 	
+	//animation
+	private SpriteAnimator spriteAnimator;
+	
 	public Manager(int gameType)
 	{
 		this.gameType = gameType;
@@ -56,6 +63,7 @@ public class Manager implements GameConstants
 		case ONLINE_GAME: game = new GameMulti(); break;
 		default : game = null;
 		}
+		spriteAnimator = new SpriteAnimator();
 	}
 	
 	/**
@@ -76,7 +84,7 @@ public class Manager implements GameConstants
 				{
 					Platform.runLater(() -> updateGUI());
 					try {
-						Thread.sleep(34);
+						Thread.sleep(SLEEP_MILITIME);
 					}catch(InterruptedException e){
 						e.printStackTrace();
 					}
@@ -127,8 +135,11 @@ public class Manager implements GameConstants
 		if(game.getGameBoard().isColFull(col)) //selected column is full
 			return;
 
-		if(game.placeToken(selected, col))
+		Token placedToken = game.placeToken(selected, col);
+		if(placedToken != null)
 		{
+			SpriteWrapper sw = new FloatDrop(placedToken, 0);
+			spriteAnimator.addSpriteWrapper(sw);
 			game.calcPoints();
 			selected = -1;
 		}
