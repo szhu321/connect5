@@ -22,7 +22,7 @@ public class GravityDrop extends SpriteWrapper
 	}
 
 	@Override
-	public void run()
+	public void tick()
 	{
 		caculateNewLocation();
 		changeSpeed();

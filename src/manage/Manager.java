@@ -164,7 +164,7 @@ public class Manager implements GameConstants
 		Token placedToken = game.placeToken(selected, col);
 		if(placedToken != null)
 		{
-			SpriteWrapper sw = new FloatDrop(placedToken, -50); //adding animation
+			SpriteWrapper sw = new FloatDrop(placedToken, -50, getTokenMomentum(placedToken)); //adding animation
 			spriteAnimator.addSpriteWrapper(sw);
 			game.calcPoints();
 			selected = -1;
@@ -383,6 +383,21 @@ public class Manager implements GameConstants
 	private void gameOverMulti()
 	{
 		
+	}
+	
+	
+	public static int getTokenMomentum(Token tk)
+	{
+		int momentum;
+		switch(tk.getPoints())
+		{
+		case 0: momentum = FloatDrop.LOW_MOMENTUM; break;
+		case 1: momentum = FloatDrop.MEDIUM_MOMENTUM; break;
+		case 2: momentum = FloatDrop.HIGH_MOMENTUM; break;
+		case 3: momentum = FloatDrop.EXTREME_MOMENTUM; break;
+		default: momentum = FloatDrop.LOW_MOMENTUM;
+		}
+		return momentum;
 	}
 	
 	public Game getGame()

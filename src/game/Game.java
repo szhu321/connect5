@@ -19,10 +19,7 @@ public abstract class Game implements GameConstants
 	 * Gets the token pile that should be currently be displayed.
 	 * @return Current TokenPile.
 	 */
-	public TokenPile getOnScreenTokenPile()
-	{
-		return playerPile;
-	}
+	public abstract TokenPile getOnScreenTokenPile();
 	
 	/**
 	 * Adds a token to the game board.

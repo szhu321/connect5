@@ -8,12 +8,14 @@ import game.Sprite;
 
 public class SpriteAnimator
 {
+	private static SpriteAnimator currentAnimator;
 	private List<SpriteWrapper> spriteWrapper;
 	private boolean running;
 	
 	public SpriteAnimator()
 	{
 		spriteWrapper = new ArrayList<SpriteWrapper>();
+		currentAnimator = this;
 		running = true;
 		startNewTimer();
 	}
@@ -34,7 +36,7 @@ public class SpriteAnimator
 				{
 					//System.out.println("Tick " + i);
 					SpriteWrapper temp = spriteWrapper.get(i);
-					temp.run();
+					temp.tick(); //ticks the animation.
 					if(temp.getDone())
 						spriteWrapper.remove(temp);
 				}
@@ -53,5 +55,10 @@ public class SpriteAnimator
 	public void stopTimer()
 	{
 		running = false;
+	}
+	
+	public static SpriteAnimator getCurrentAnimator()
+	{
+		return currentAnimator;
 	}
 }

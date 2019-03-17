@@ -18,4 +18,10 @@ public class GameMulti extends Game
 		return null;
 	}
 
+	@Override
+	public TokenPile getOnScreenTokenPile()
+	{
+		return getPlayerPile();
+	}
+
 }

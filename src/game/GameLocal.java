@@ -6,6 +6,7 @@ public class GameLocal extends Game
 	
 	public GameLocal()
 	{
+		myTurn = true;
 		player2Pile = new TokenPile(PLAYER2);
 	}
 	
