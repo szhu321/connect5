@@ -4,9 +4,10 @@ public interface ServerConstants
 {
 	//server to client commands
 	public static final int MESSAGE = 8;
-	public static final int PING_PONG = 9;
-	public static final int SERVER_TOKEN = 10;
+	public static final int SEND_TOKEN = 10;
 	public static final int SERVER_STATUS = 11;
+	public static final int SEND_MOVE = 12;
+	public static final int ASK_FOR_TOKEN = 19;
 		
 	
 	public static final int CONTINUE_STATUS = 3;

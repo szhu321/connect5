@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import game.Token;
 import javafx.application.Platform;
 
 public class SocketManager implements ServerConstants
@@ -15,15 +16,24 @@ public class SocketManager implements ServerConstants
 	private Socket mainSocket;
 	private boolean connected;
 	
+	private boolean waiting;
+	
 	private DataInputStream dataIn;
 	private DataOutputStream dataOut;
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
 	
-	public SocketManager(Socket socket)
+	private Thread thread;
+	
+	//The object that uses this class.
+	private SocketMaster master;
+	
+	public SocketManager(SocketMaster master, Socket socket)
 	{
 		mainSocket = socket;
+		this.master = master;
 		connected = true;
+		waiting = true;
 		createConnections();
 		listenForInput();
 	}
@@ -40,21 +50,34 @@ public class SocketManager implements ServerConstants
 		}
 	}
 	
+	//creates a thread the listens for input
 	public void listenForInput()
 	{
-		new Thread(() -> 
+		thread = new Thread(() -> 
 		{
 			try {
 				while(connected)
 				{
 					int command = dataIn.readInt();
+					waiting = true;
 					Platform.runLater(() -> manageCommand(command));
+					
+					//waits for the command to continue reading.
+					while(waiting)
+					{
+						Thread.sleep(5);
+					}
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} catch(IOException e)
+			{
 				e.printStackTrace();
+				//connection error with this socket.
+			} catch(InterruptedException inE)
+			{
+				inE.printStackTrace();
 			}
-		}).start();
+		});
+		thread.start();
 	}
 	
 	//only one command at a time.
@@ -62,10 +85,53 @@ public class SocketManager implements ServerConstants
 	{
 		switch(command)
 		{
-		case PING_PONG: break;
-		case MESSAGE: break;
-		case CONTINUE_STATUS: break;
-		case SERVER_TOKEN: break;
+		case MESSAGE: readMessage(); break;
+		case CONTINUE_STATUS: readStatus(); break;
+		case SEND_TOKEN: readToken(); break;
+		}
+		waiting = false;
+	}
+
+	/**
+	 * Read Player. Then read Color.
+	 */
+	private void readToken()
+	{
+		int player, number;
+		try {
+			player = dataIn.readInt();
+			number = dataIn.readInt();
+			Token tk = Token.createNumberToken(player, number);
+			master.giveToken(tk);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void readStatus()
+	{
+		try {
+			int status = dataIn.readInt();
+			master.giveStatus(status);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void readMessage()
+	{
+		try {
+			String message = (String)objIn.readObject();
+			System.out.println(message);
+			master.giveMessage(message);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

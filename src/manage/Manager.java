@@ -8,12 +8,15 @@ import animation.SpriteWrapper;
 import game.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,12 +35,15 @@ public class Manager implements GameConstants
 	private Canvas tokenQueue;
 	private Scene scene;
 	private GridPane root;
+	private VBox textBox;
 	
 	//Gui Chunks
 	protected Label p1PtLbl;
 	protected Label p2PtLbl;
 	protected Text p1PtTxt;
 	protected Text p2PtTxt;
+	private TextArea textArea;
+	private TextField textField;
 	
 	//backend
 	private Game game;
@@ -75,6 +81,7 @@ public class Manager implements GameConstants
 		setUpScoreBox();
 		setUpCanvas();
 		setUpTokenQueue();
+		setUpTextBox();
 		createNewScene();
 		gameLoop = true;
 		//runs the gameloop
@@ -92,6 +99,24 @@ public class Manager implements GameConstants
 				}
 			}
 		}.start();
+	}
+	
+	private void setUpTextBox()
+	{
+		textBox = new VBox(10);
+		textArea = new TextArea();
+		textArea.setEditable(false);
+		textField = new TextField();
+		textBox.getChildren().addAll(textArea, textField);
+		
+		textField.setOnAction(e -> 
+		{
+			String text = textField.getText();
+			//prints to screen
+			if(!text.equals(""))
+				print(text);
+			textField.setText("");
+		});
 	}
 	
 	/**
@@ -139,7 +164,7 @@ public class Manager implements GameConstants
 		Token placedToken = game.placeToken(selected, col);
 		if(placedToken != null)
 		{
-			SpriteWrapper sw = new FloatDrop(placedToken, 0);
+			SpriteWrapper sw = new FloatDrop(placedToken, -50); //adding animation
 			spriteAnimator.addSpriteWrapper(sw);
 			game.calcPoints();
 			selected = -1;
@@ -235,7 +260,7 @@ public class Manager implements GameConstants
 		//repaints the tokenQueue.
 		GraphicsContext gc = tokenQueue.getGraphicsContext2D();
 		//clears the queue.
-		gc.setFill(Color.WHITE);
+		gc.setFill(Color.GREEN);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
 		Token[] tq = game.getOnScreenTokenPile().getCurrentHandCopy();
@@ -272,10 +297,36 @@ public class Manager implements GameConstants
 		root.setVgap(20);
 		root.setPadding(new Insets(20, 20, 20, 20));
 		
+		VBox rightContainer = new VBox(50);
+		rightContainer.getChildren().addAll(scoreBox, textBox);
+		VBox leftContainer = new VBox(20);
+		leftContainer.setAlignment(Pos.CENTER);
+		leftContainer.getChildren().addAll(canvas, tokenQueue);
+		
+		//scoreBox.add(textBox, 0, 2);
+		
 		//adding stuff to scene
-		root.add(scoreBox, 1, 0);
-		root.add(canvas, 0, 0);
-		root.add(tokenQueue, 0, 1);
+		root.add(rightContainer, 1, 0);
+		root.add(leftContainer, 0, 0);
+	}
+	
+	/**
+	 * Prints the given text on the text area.
+	 * @param text The text to be printed.
+	 */
+	public void print(String text)
+	{
+		print("You", text);
+	}
+	
+	/**
+	 * Prints the given text on the screen with a author.
+	 * @param author The author provided.
+	 * @param text The text provided.
+	 */
+	public void print(String author, String text)
+	{
+		textArea.appendText(author + ": " + text + "\n");
 	}
 	
 	public void updateScoreBox()
@@ -308,6 +359,30 @@ public class Manager implements GameConstants
 	public void gameOver()
 	{
 		stopGame();
+		switch(gameType)
+		{
+		case LOCAL_GAME: gameOverLocal(); break;
+		case SINGLE_GAME: gameOverSingle(); break;
+		case ONLINE_GAME: gameOverMulti(); break;
+		}
+	}
+	
+	private void gameOverLocal()
+	{
+		if(game.getPlayer1Points() == game.getPlayer2Points())
+			print("System", "It was a Tie!");
+		else
+			print("System", ((game.getPlayer1Points() > game.getPlayer2Points()) ? "Red":"Black") + " wins!");
+	}
+	
+	private void gameOverSingle()
+	{
+		
+	}
+	
+	private void gameOverMulti()
+	{
+		
 	}
 	
 	public Game getGame()
