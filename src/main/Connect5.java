@@ -1,6 +1,7 @@
 package main;
 
 import animation.ImageLoader;
+import game.Game;
 import game.GameBoard;
 import game.GameConstants;
 import game.NumberToken;
@@ -44,9 +45,9 @@ public class Connect5 extends Application
 		window.show();
 	}
 	
-	public static void createNewManager(int type)
+	public static void createNewManager(Game game)
 	{
-		manager = new Manager(type);
+		manager = new Manager(game);
 	}
 
 	public static void toManagerScene()

@@ -38,6 +38,8 @@ public abstract class Game implements GameConstants
 		myTurn = !myTurn;
 	}
 	
+	public abstract int getGameType();
+	
 	/**
 	 * Checks to see if there is either a connect 5 or a full board.
 	 */

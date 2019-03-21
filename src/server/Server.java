@@ -29,7 +29,7 @@ public class Server extends Application implements GameConstants
 	private int numOfSessions = 1;
 	
 	public static final int PORT = 8100;
-	private Thread serverThread = new Thread();
+	private Thread serverThread;
 	
 	public static void main(String[] args)
 	{
@@ -93,21 +93,9 @@ public class Server extends Application implements GameConstants
 						numPlayers++; //increment the number of players.
 					}
 					write("All players have connected.\n Starting Session " + numOfSessions++ + "...");
+					
 					numPlayers = 0;
-					Random rd = new Random(); //decided who is player1 and who is player2.
-					if(rd.nextInt(2) == 0)
-					{
-						//sends the client info on who is player 1 and who is player2.
-						new DataOutputStream(sockets[0].getOutputStream()).writeInt(PLAYER1);
-						new DataOutputStream(sockets[1].getOutputStream()).writeInt(PLAYER2);
-						new Thread(new GameSession(sockets[0], sockets[1])).start();
-					}
-					else
-					{
-						new DataOutputStream(sockets[1].getOutputStream()).writeInt(PLAYER1);
-						new DataOutputStream(sockets[0].getOutputStream()).writeInt(PLAYER2);
-						new Thread(new GameSession(sockets[1], sockets[0])).start();
-					}
+					new Thread(new GameSession(sockets[1], sockets[0])).start();
 				}
 			} 
 			catch (IOException e)

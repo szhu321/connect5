@@ -18,8 +18,6 @@ public class SocketManager implements ServerConstants
 	
 	private boolean waiting;
 	
-	private DataInputStream dataIn;
-	private DataOutputStream dataOut;
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
 	
@@ -31,34 +29,39 @@ public class SocketManager implements ServerConstants
 	public SocketManager(SocketMaster master, Socket socket)
 	{
 		mainSocket = socket;
-		this.master = master;
-		connected = true;
+		this.master = master;	
 		waiting = true;
+		createThread();
 		createConnections();
-		listenForInput();
 	}
 	
 	public void createConnections()
 	{
-		try {
-			dataIn = new DataInputStream(mainSocket.getInputStream());
-			dataOut = new DataOutputStream(mainSocket.getOutputStream());
-			objIn = new ObjectInputStream(mainSocket.getInputStream());
-			objOut = new ObjectOutputStream(mainSocket.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Creating connections");
+		new Thread(() -> 
+		{
+			try {
+				objOut = new ObjectOutputStream(mainSocket.getOutputStream());
+				objOut.flush();
+				objIn = new ObjectInputStream(mainSocket.getInputStream());
+				connected = true;
+				listensForInput();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}).start();	
 	}
 	
-	//creates a thread the listens for input
-	public void listenForInput()
+	//creates a thread that listens for input
+	public void createThread()
 	{
 		thread = new Thread(() -> 
 		{
 			try {
 				while(connected)
 				{
-					int command = dataIn.readInt();
+					System.out.println("listening for input");
+					int command = objIn.readInt();
 					waiting = true;
 					Platform.runLater(() -> manageCommand(command));
 					
@@ -77,6 +80,10 @@ public class SocketManager implements ServerConstants
 				inE.printStackTrace();
 			}
 		});
+	}
+	
+	public void listensForInput()
+	{
 		thread.start();
 	}
 	
@@ -99,10 +106,10 @@ public class SocketManager implements ServerConstants
 	{
 		int player, number;
 		try {
-			player = dataIn.readInt();
-			number = dataIn.readInt();
+			player = objIn.readInt();
+			number = objIn.readInt();
 			Token tk = Token.createNumberToken(player, number);
-			master.giveToken(tk);
+			master.receiveToken(this, tk);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,8 +119,8 @@ public class SocketManager implements ServerConstants
 	private void readStatus()
 	{
 		try {
-			int status = dataIn.readInt();
-			master.giveStatus(status);
+			int status = objIn.readInt();
+			master.receiveStatus(this, status);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,8 +131,8 @@ public class SocketManager implements ServerConstants
 	{
 		try {
 			String message = (String)objIn.readObject();
-			System.out.println(message);
-			master.giveMessage(message);
+			//System.out.println(message);
+			master.receiveMessage(this, message);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -133,5 +140,30 @@ public class SocketManager implements ServerConstants
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Sends the connected socket a message.
+	 * @param message The given message.
+	 */
+	public void sendMessage(String message)
+	{
+		if(connected)
+		{
+			try {
+				objOut.writeInt(MESSAGE);
+				objOut.flush();
+				objOut.writeObject(message);
+				objOut.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public String toString()
+	{
+		return mainSocket.getInetAddress().toString();
 	}
 }

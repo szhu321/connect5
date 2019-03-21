@@ -1,14 +1,22 @@
 package game;
 
-public class GameMulti extends Game
+import java.net.Socket;
+
+import server.SocketManager;
+import server.SocketMaster;
+
+public class GameMulti extends Game implements SocketMaster
 {
-	public TokenPile player2Pile;
 	public TokenPile player1Pile; //alias for the token pile in the super class;
+	public SocketManager socketManager;
 	
-	public GameMulti()
+	
+	public GameMulti(Socket socket)
 	{
-		player2Pile = new TokenPile(PLAYER2);
 		player1Pile = getPlayerPile();
+		//System.out.println("creating game Multi");
+		socketManager = new SocketManager(this, socket);
+		System.out.println("Created SocketManager");
 	}
 	
 	@Override
@@ -22,6 +30,35 @@ public class GameMulti extends Game
 	public TokenPile getOnScreenTokenPile()
 	{
 		return getPlayerPile();
+	}
+
+	@Override
+	public int getGameType()
+	{
+		return GameConstants.ONLINE_GAME;
+	}
+	
+	public void sendMessage(String message)
+	{
+		socketManager.sendMessage(message);
+	}
+
+	@Override
+	public void receiveMessage(SocketManager source, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receiveToken(SocketManager source, Token tk) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receiveStatus(SocketManager source, int status) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

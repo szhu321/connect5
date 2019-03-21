@@ -24,7 +24,7 @@ public class FloatDrop extends GravityDrop
 		case LOW_MOMENTUM: riseRatio = 0.2; break;
 		case MEDIUM_MOMENTUM: riseRatio = 0.1; break;
 		case HIGH_MOMENTUM: riseRatio = 0.05; break;
-		case EXTREME_MOMENTUM: riseRatio = 0.02; break;
+		case EXTREME_MOMENTUM: riseRatio = 0.03; break;
 		default: riseRatio = 0.2;
 		}
 	}

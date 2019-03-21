@@ -1,6 +1,8 @@
 package manage;
 
 import game.GameConstants;
+import game.GameLocal;
+import game.GameSingle;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -29,13 +31,13 @@ public class MainMenu
 		
 		localBtn.setOnAction(e -> 
 		{
-			Connect5.createNewManager(GameConstants.LOCAL_GAME);
+			Connect5.createNewManager(new GameLocal());
 			Connect5.toManagerScene();
 		});
 		
 		singleBtn.setOnAction(e ->
 		{
-			Connect5.createNewManager(GameConstants.SINGLE_GAME);
+			Connect5.createNewManager(new GameSingle());
 			Connect5.toManagerScene();
 		});
 		

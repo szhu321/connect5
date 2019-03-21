@@ -30,4 +30,9 @@ public class GameLocal extends Game
 		}
 		return null;
 	}
+
+	@Override
+	public int getGameType() {
+		return GameConstants.LOCAL_GAME;
+	}
 }

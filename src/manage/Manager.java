@@ -48,29 +48,16 @@ public class Manager implements GameConstants
 	//backend
 	private Game game;
 	private boolean gameLoop;
-	private int gameType;
 	private int selected = -1;
 	
 	//animation
 	private SpriteAnimator spriteAnimator;
 	
-	public Manager(int gameType)
+	public Manager(Game game)
 	{
-		this.gameType = gameType;
-		newGame();
-		setUpGameScene();
-	}
-	
-	public void newGame()
-	{
-		switch(gameType)
-		{
-		case LOCAL_GAME: game = new GameLocal(); break;
-		case SINGLE_GAME: game = new GameSingle(); break;
-		case ONLINE_GAME: game = new GameMulti(); break;
-		default : game = null;
-		}
 		spriteAnimator = new SpriteAnimator();
+		this.game = game;
+		setUpGameScene();
 	}
 	
 	/**
@@ -114,7 +101,11 @@ public class Manager implements GameConstants
 			String text = textField.getText();
 			//prints to screen
 			if(!text.equals(""))
+			{
 				print(text);
+				if(game instanceof GameMulti)
+					((GameMulti)game).sendMessage(text);
+			}
 			textField.setText("");
 		});
 	}
@@ -347,19 +338,13 @@ public class Manager implements GameConstants
 		});
 	}
 	
-	public void restartGame()
-	{
-		newGame();
-		setUpGameScene();
-	}
-	
 	/**
 	 * Manages game over
 	 */
 	public void gameOver()
 	{
 		stopGame();
-		switch(gameType)
+		switch(game.getGameType())
 		{
 		case LOCAL_GAME: gameOverLocal(); break;
 		case SINGLE_GAME: gameOverSingle(); break;

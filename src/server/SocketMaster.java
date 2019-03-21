@@ -4,7 +4,7 @@ import game.Token;
 
 public interface SocketMaster
 {
-	public void giveMessage(String message);
-	public void giveToken(Token tk);
-	public void giveStatus(int status);
+	public void receiveMessage(SocketManager source, String message);
+	public void receiveToken(SocketManager source, Token tk);
+	public void receiveStatus(SocketManager source, int status);
 }

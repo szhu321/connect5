@@ -36,4 +36,10 @@ public class GameSingle extends Game
 		//random Ai
 		
 	}
+
+	@Override
+	public int getGameType()
+	{
+		return GameConstants.SINGLE_GAME;
+	}
 }
