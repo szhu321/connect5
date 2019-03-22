@@ -4,6 +4,7 @@ public interface ServerConstants
 {
 	//server to client commands
 	public static final int MESSAGE = 8;
+	public static final int SEND_ROLE = 9;
 	public static final int SEND_TOKEN = 10;
 	public static final int SEND_MOVE = 12;
 	public static final int ASK_FOR_TOKEN = 19;

@@ -7,8 +7,8 @@ import server.SocketMaster;
 
 public class GameMulti extends Game implements SocketMaster
 {
-	public TokenPile player1Pile; //alias for the token pile in the super class;
-	public SocketManager socketManager;
+	private TokenPile player1Pile; //alias for the token pile in the super class;
+	private SocketManager socketManager;
 	
 	
 	public GameMulti(Socket socket)
@@ -29,7 +29,7 @@ public class GameMulti extends Game implements SocketMaster
 	@Override
 	public TokenPile getOnScreenTokenPile()
 	{
-		return getPlayerPile();
+		return player1Pile;
 	}
 
 	@Override
@@ -57,6 +57,12 @@ public class GameMulti extends Game implements SocketMaster
 
 	@Override
 	public void receiveStatus(SocketManager source, int status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receiveRole(SocketManager source, int playerNum) {
 		// TODO Auto-generated method stub
 		
 	}

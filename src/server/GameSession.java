@@ -27,16 +27,23 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 	
 	public GameSession(Socket player1, Socket player2)
 	{
-		game = new GameLocal();
+		game = new GameLocal();//Decided to use gamelocal.
 		session = ++sessionNum;
 		this.player1 = player1;
 		this.player2 = player2;
 		shufflePlayers();
 		p1SManager = new SocketManager(this, player1);
 		p2SManager = new SocketManager(this, player2);
+		sendPlayerRoles();
 	}
 	
-	public void shufflePlayers()
+	private void sendPlayerRoles()
+	{
+		
+		
+	}
+
+	private void shufflePlayers()
 	{
 		if(Math.random() > .5)
 		{
@@ -52,28 +59,39 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 		
 	}	
 	
+	public int getSession()
+	{
+		return session;
+	}
+	
 	private boolean areClientsConnected()
 	{
 		return !player1.isClosed() && !player2.isClosed(); 
 	}
 
 	@Override
-	public void receiveMessage(SocketManager source, String message) {
+	public void receiveMessage(SocketManager source, String message)
+	{
 		Server.write(source.toString() + message);
 		
 	}
 
 	@Override
-	public void receiveToken(SocketManager source, Token tk) {
+	public void receiveToken(SocketManager source, Token tk)
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void receiveStatus(SocketManager source, int status) {
+	public void receiveStatus(SocketManager source, int status)
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	
+	@Override
+	public void receiveRole(SocketManager source, int playerNum) {
+		//Do Nothing.
+	}
 }

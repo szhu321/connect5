@@ -115,6 +115,51 @@ public class TokenPile
 	}
 	
 	/**
+	 * Use this method to remove all elements of current hand and returns a copy of it.
+	 */
+	public Token[] depopulateHand()
+	{
+		Token[] copy = new Token[currentHand.length];
+		for(int i = 0; i < copy.length; i++)
+		{
+			copy[i] = currentHand[i];
+			currentHand[i] = null;
+		}
+		return copy;
+	}
+	
+	/**
+	 * Adds a token to the player's hand.
+	 * @param tk The token provided.
+	 * @return true if the token is successfully added false otherwise.
+	 */
+	public boolean addTokenToHand(Token tk)
+	{
+		collapseLeft();//moves all the tokens to the left of the currentHand array.
+		if(isHandFull())//if the hand is full then there is no way to place the token.
+			return false;
+		for(int i = 0; i < currentHand.length; i++)
+			if(currentHand[i] == null)
+			{
+				currentHand[i] = tk;
+				break;
+			}
+		return true;
+	}
+	
+	/**
+	 * Checks to see if the current hand is full or not.
+	 * @return true if the hand is full. False otherwise(there is a null element).
+	 */
+	public boolean isHandFull()
+	{
+		for(Token tk: currentHand)
+			if(tk == null)
+				return false;
+		return true;
+	}
+	
+	/**
 	 * Gets a token from the currentHand and then remove it.
 	 * @param idx The index for the currentHand.
 	 * @return The removed token.

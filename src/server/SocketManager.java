@@ -1,9 +1,6 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -35,7 +32,10 @@ public class SocketManager implements ServerConstants
 		createConnections();
 	}
 	
-	public void createConnections()
+	/**
+	 * Creates stream connections and starts the thread.
+	 */
+	private void createConnections()
 	{
 		System.out.println("Creating connections");
 		new Thread(() -> 
@@ -52,8 +52,10 @@ public class SocketManager implements ServerConstants
 		}).start();	
 	}
 	
-	//creates a thread that listens for input
-	public void createThread()
+	/**
+	 * creates a thread that listens for input
+	 */
+	private void createThread()
 	{
 		thread = new Thread(() -> 
 		{
@@ -82,6 +84,9 @@ public class SocketManager implements ServerConstants
 		});
 	}
 	
+	/**
+	 * starts the thread.
+	 */
 	public void listensForInput()
 	{
 		thread.start();
@@ -95,8 +100,20 @@ public class SocketManager implements ServerConstants
 		case MESSAGE: readMessage(); break;
 		case CONTINUE_STATUS: readStatus(); break;
 		case SEND_TOKEN: readToken(); break;
+		case SEND_ROLE: readRole();
 		}
 		waiting = false;
+	}
+
+	private void readRole()
+	{
+		try {
+			int playerNum = objIn.readInt();
+			master.receiveRole(this, playerNum);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -154,6 +171,26 @@ public class SocketManager implements ServerConstants
 				objOut.writeInt(MESSAGE);
 				objOut.flush();
 				objOut.writeObject(message);
+				objOut.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Tells the client if they are player1 or player2.
+	 * @param playerNumber GameConstant.PLAYER1 or GameConstant.PLAYER2
+	 */
+	public void sendRole(int playerNumber)
+	{
+		if(connected)
+		{
+			try {
+				objOut.writeInt(SEND_ROLE);//Sends the type of command.
+				objOut.flush();
+				objOut.writeInt(playerNumber);
 				objOut.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
