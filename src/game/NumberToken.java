@@ -27,4 +27,12 @@ public class NumberToken extends Token
 	{
 		return number;
 	}
+
+	@Override
+	public Sprite getCopy()
+	{
+		return new NumberToken(getImage(), getX(), getY(), getWidth(), getHeight(), getPlayer(), number);
+	}
+	
+	
 }

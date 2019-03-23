@@ -17,9 +17,6 @@ public abstract class SocketManager implements ServerConstants
 	
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
-	
-	
-
 	private Thread thread;
 	
 	//The object that uses this class.

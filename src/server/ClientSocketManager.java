@@ -23,20 +23,8 @@ public class ClientSocketManager extends SocketManager
 		case CONTINUE_STATUS: readStatus(); break;
 		case SEND_TOKEN: readToken(); break;
 		case SEND_MOVE: readMove(); break;
-		case SEND_ROLE: readRole();
 		}
 		setWaiting(false);
-	}
-	
-	private void readRole()
-	{
-		try {
-			int playerNum = getObjIn().readInt();
-			master.receiveRole(this, playerNum);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	/**
@@ -67,4 +55,16 @@ public class ClientSocketManager extends SocketManager
 		}
 	}
 	
+	public void askForToken()
+	{
+		if(getObjOut() == null)
+			return;
+		try {
+			getObjOut().writeInt(ASK_FOR_TOKEN);
+			getObjOut().flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -20,21 +20,23 @@ public class GameSession implements Runnable, GameConstants, ServerSocketMaster
 	private Socket player1;
 	private Socket player2;
 	
-	private SocketManager p1SManager;
-	private SocketManager p2SManager;
+	private ServerSocketManager p1SManager;
+	private ServerSocketManager p2SManager;
 	
-	private Game game;
+	private GameLocal game;
 	
 	public GameSession(Socket player1, Socket player2)
 	{
 		game = new GameLocal();//Decided to use gamelocal.
+		game.getPlayerPile().resetToEmpty();
+		game.getPlayer2Pile().resetToEmpty();
 		session = ++sessionNum;
 		this.player1 = player1;
 		this.player2 = player2;
 		shufflePlayers();
 		sendPlayerRoles(); //sending this will tell the players to start the game.
-		p1SManager = new ServerSocketManager(this, player1);
-		p2SManager = new ServerSocketManager(this, player2);
+		p1SManager = new ServerSocketManager(this, this.player1);
+		p2SManager = new ServerSocketManager(this, this.player2);
 		
 	}
 	
@@ -89,6 +91,17 @@ public class GameSession implements Runnable, GameConstants, ServerSocketMaster
 	{
 		
 		
+	}
+	
+	@Override
+	public Token transferToken(SocketManager source)
+	{
+		Token tk;
+		if(source == p1SManager)
+			tk = game.getPlayerPile().popMasterList();
+		else
+			tk = game.getPlayer2Pile().popMasterList();
+		return tk;
 	}
 	
 	private void endSession()

@@ -20,7 +20,7 @@ public class Connect5 extends Application
 	
 	
 	private static Stage window;
-	private static Manager manager;
+	private static GameScene manager;
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
 	private static ServerLounge serverLounge;
@@ -49,7 +49,7 @@ public class Connect5 extends Application
 	
 	public static void createNewManager(Game game)
 	{
-		manager = new Manager(game);
+		manager = new GameScene(game);
 	}
 
 	public static void toManagerScene()

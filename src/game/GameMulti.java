@@ -9,20 +9,50 @@ import server.SocketMaster;
 
 public class GameMulti extends Game implements ClientSocketMaster
 {
-	private SocketManager socketManager;
+	private ClientSocketManager socketManager;
 	
 	public GameMulti(Socket socket, int playerNum)
 	{
 		super(playerNum);
+		myTurn = (playerNum == PLAYER1) ? true:false;//sets the turn.
 		socketManager = new ClientSocketManager(this, socket);
-		//System.out.println("creating game Multi");
-		System.out.println("Created SocketManager");
+		getPlayerPile().depopulateHand();//the server will provied the tokens.
+		startTokenAsker();
+	}
+	
+	public void startTokenAsker()
+	{
+		new Thread(() -> {
+			while(true)
+			{
+				System.out.println("TICK");
+				if(!getPlayerPile().isHandFull())
+				{
+					socketManager.askForToken();
+					System.out.println("Client Asking for token");
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
 	}
 	
 	@Override
 	public Token placeToken(int handIdx, int col)
 	{
-		
+		if(myTurn)
+		{
+			Token tk = getPlayerPile().getToken(handIdx);
+			if(getGameBoard().placeToken(tk, col))
+			{
+				swapTurn();
+				return tk;
+			}
+		}
 		return null;
 	}
 
@@ -50,20 +80,16 @@ public class GameMulti extends Game implements ClientSocketMaster
 	}
 
 	@Override
-	public void receiveToken(SocketManager source, Token tk) {
-		// TODO Auto-generated method stub
-		
+	public void receiveToken(SocketManager source, Token tk)
+	{
+		System.out.println("Added new token");
+		getPlayerPile().addTokenToHand(tk);
 	}
 
 	@Override
-	public void receiveStatus(SocketManager source, int status) {
-		// TODO Auto-generated method stub
+	public void receiveStatus(SocketManager source, int status)
+	{
 		
-	}
-
-	@Override
-	public void receiveRole(SocketManager source, int playerNum) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javafx.scene.image.Image;
 
-public class Sprite implements Serializable
+public abstract class Sprite implements Serializable
 {
 	private static final long serialVersionUID = 9190247812115625938L;
 
@@ -46,8 +46,5 @@ public class Sprite implements Serializable
 	public boolean isVisible() {return visible;}
 	public void setVisible(boolean visible) {this.visible = visible;}
 	
-	public Sprite getCopy()
-	{
-		return new Sprite(name, image, x, y, width, height, faceAngle);
-	}
+	public abstract Sprite getCopy();
 }

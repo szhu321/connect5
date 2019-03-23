@@ -2,7 +2,7 @@ package game;
 
 public class GameLocal extends Game
 {
-	public TokenPile player2Pile;
+	private TokenPile player2Pile;
 	
 	public GameLocal()
 	{
@@ -34,5 +34,10 @@ public class GameLocal extends Game
 	@Override
 	public int getGameType() {
 		return GameConstants.LOCAL_GAME;
+	}
+	
+	public TokenPile getPlayer2Pile()
+	{
+		return player2Pile;
 	}
 }

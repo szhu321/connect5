@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Connect5;
 
-public class Manager implements GameConstants
+public class GameScene implements GameConstants
 {
 	//Gui
 	private GridPane scoreBox;
@@ -53,7 +53,7 @@ public class Manager implements GameConstants
 	//animation
 	private SpriteAnimator spriteAnimator;
 	
-	public Manager(Game game)
+	public GameScene(Game game)
 	{
 		spriteAnimator = new SpriteAnimator();
 		this.game = game;
@@ -160,8 +160,9 @@ public class Manager implements GameConstants
 			game.calcPoints();
 			selected = -1;
 		}
-		//checks game over.
-		if(game.isGameOver())
+		
+		//checks game over. Multiplayer games have the server checking for wins.
+		if(game.isGameOver() && !(game instanceof GameMulti))
 			gameOver();
 	}
 	

@@ -1,6 +1,8 @@
 package server;
 
+import game.Token;
+
 public interface ServerSocketMaster extends SocketMaster
 {
-	//:O
+	public Token transferToken(SocketManager source);
 }

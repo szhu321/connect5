@@ -26,6 +26,16 @@ public class TokenPile
 	}
 	
 	/**
+	 * Resets the tokens on pile and clears the currenthand.
+	 */
+	public void resetToEmpty()
+	{
+		generateTokens();
+		shuffleTokens();
+		depopulateHand();
+	}
+	
+	/**
 	 * Adds more tokens to the current hand.					
 	 */
 	public void populateHand()
@@ -42,7 +52,7 @@ public class TokenPile
 	 * @return the token that was removed. 
 	 * null if there are no more tokens.
 	 */
-	private Token popMasterList()
+	public Token popMasterList()
 	{
 		if(tokenLeft <= 0)
 		{
