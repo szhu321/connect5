@@ -20,7 +20,7 @@ public class Connect5 extends Application
 	
 	
 	private static Stage window;
-	private static GameScene manager;
+	private static GameScene gameScene;
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
 	private static ServerLounge serverLounge;
@@ -49,12 +49,12 @@ public class Connect5 extends Application
 	
 	public static void createNewManager(Game game)
 	{
-		manager = new GameScene(game);
+		gameScene = new GameScene(game);
 	}
 
 	public static void toManagerScene()
 	{
-		window.setScene(manager.getScene());
+		window.setScene(gameScene.getScene());
 	}
 	
 	public static void toServerScene()
@@ -77,4 +77,5 @@ public class Connect5 extends Application
 	
 	public static double getScale(){return scale;}
 	public static void setScale(double scale){Connect5.scale = scale;}
+	public static GameScene getGameScene() {return gameScene;}
 }

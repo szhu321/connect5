@@ -76,7 +76,10 @@ public class GameSession implements Runnable, GameConstants, ServerSocketMaster
 	public void receiveMessage(SocketManager source, String message)
 	{
 		Server.write(source.toString() + message);
-		
+		if(source == p1SManager)
+			p2SManager.sendMessage("Enemy: " + message);
+		else
+			p1SManager.sendMessage("Enemy: " + message);
 	}
 
 	@Override

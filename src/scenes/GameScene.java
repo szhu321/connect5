@@ -102,7 +102,7 @@ public class GameScene implements GameConstants
 			//prints to screen
 			if(!text.equals(""))
 			{
-				print(text);
+				print("You",text);
 				if(game instanceof GameMulti)
 					((GameMulti)game).sendMessage(text);
 			}
@@ -308,7 +308,7 @@ public class GameScene implements GameConstants
 	 */
 	public void print(String text)
 	{
-		print("You", text);
+		textArea.appendText(text + "\n");
 	}
 	
 	/**

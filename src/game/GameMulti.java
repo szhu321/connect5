@@ -2,6 +2,7 @@ package game;
 
 import java.net.Socket;
 
+import main.Connect5;
 import server.ClientSocketManager;
 import server.ClientSocketMaster;
 import server.SocketManager;
@@ -10,6 +11,7 @@ import server.SocketMaster;
 public class GameMulti extends Game implements ClientSocketMaster
 {
 	private ClientSocketManager socketManager;
+	private boolean gameOn = true;
 	
 	public GameMulti(Socket socket, int playerNum)
 	{
@@ -23,7 +25,7 @@ public class GameMulti extends Game implements ClientSocketMaster
 	public void startTokenAsker()
 	{
 		new Thread(() -> {
-			while(true)
+			while(gameOn)
 			{
 				System.out.println("TICK");
 				if(!getPlayerPile().isHandFull())
@@ -74,9 +76,9 @@ public class GameMulti extends Game implements ClientSocketMaster
 	}
 
 	@Override
-	public void receiveMessage(SocketManager source, String message) {
-		// TODO Auto-generated method stub
-		
+	public void receiveMessage(SocketManager source, String message)
+	{
+		Connect5.getGameScene().print(message);
 	}
 
 	@Override
@@ -94,9 +96,10 @@ public class GameMulti extends Game implements ClientSocketMaster
 	}
 
 	@Override
-	public void manageDisconnect(SocketManager source) {
-		// TODO Auto-generated method stub
-		
+	public void manageDisconnect(SocketManager source)
+	{
+		gameOn = false;
+		Connect5.getGameScene().print("System", "Player Disconnected, Game Ended");
 	}
 
 	@Override
