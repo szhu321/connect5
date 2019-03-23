@@ -1,4 +1,4 @@
-package manage;
+package scenes;
 
 import game.GameConstants;
 import game.GameLocal;

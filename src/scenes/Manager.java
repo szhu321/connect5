@@ -1,4 +1,4 @@
-package manage;
+package scenes;
 
 import animation.FloatDrop;
 import animation.GravityDrop;

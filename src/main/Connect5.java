@@ -1,5 +1,7 @@
 package main;
 
+import java.net.Socket;
+
 import animation.ImageLoader;
 import game.Game;
 import game.GameBoard;
@@ -7,8 +9,7 @@ import game.GameConstants;
 import game.NumberToken;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import manage.*;
-import manage.Manager;
+import scenes.*;
 
 public class Connect5 extends Application
 {
@@ -22,6 +23,7 @@ public class Connect5 extends Application
 	private static Manager manager;
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
+	private static ServerLounge serverLounge;
 
 	public static void main(String[] args)
 	{
@@ -65,6 +67,12 @@ public class Connect5 extends Application
 	{
 		mainMenu = new MainMenu();
 		window.setScene(mainMenu.getScene());
+	}
+	
+	public static void toServerLounge(Socket server)
+	{
+		serverLounge = new ServerLounge(server);
+		window.setScene(serverLounge.getScene());
 	}
 	
 	public static double getScale(){return scale;}

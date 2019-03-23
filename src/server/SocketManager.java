@@ -8,7 +8,7 @@ import java.net.Socket;
 import game.Token;
 import javafx.application.Platform;
 
-public class SocketManager implements ServerConstants
+public abstract class SocketManager implements ServerConstants
 {
 	private Socket mainSocket;
 	private boolean connected;
@@ -77,6 +77,7 @@ public class SocketManager implements ServerConstants
 			{
 				e.printStackTrace();
 				//connection error with this socket.
+				master.manageDisconnect(this);
 			} catch(InterruptedException inE)
 			{
 				inE.printStackTrace();
@@ -196,6 +197,16 @@ public class SocketManager implements ServerConstants
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void close()
+	{
+		try {
+			mainSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

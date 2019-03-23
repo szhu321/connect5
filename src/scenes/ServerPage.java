@@ -1,4 +1,4 @@
-package manage;
+package scenes;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -78,12 +78,15 @@ public class ServerPage
 				Socket socket = new Socket(ipTf.getText(), Integer.parseInt(portTf.getText()));
 				
 				infoTxt.setText("Successfully connected");
-				Platform.runLater(() -> 
-				{
-					Connect5.createNewManager(new GameMulti(socket));
-					System.out.println("Manager Created");
-					Connect5.toManagerScene();
-				});
+//				Platform.runLater(() -> 
+//				{
+//					Connect5.createNewManager(new GameMulti(socket));
+//					System.out.println("Manager Created");
+//					Connect5.toManagerScene();
+//				});
+				
+				//moves to server lounge.
+				Platform.runLater(() -> Connect5.toServerLounge(socket));
 				
 			}
 			catch (NumberFormatException e1) {
@@ -95,7 +98,7 @@ public class ServerPage
 			} catch (IOException e1) {
 				infoTxt.setText("Connection Failed");
 				e1.printStackTrace();
-			} finally {
+			} finally { 
 				connectBtn.setDisable(false); //enable the button when it fails to connect.
 			}
 		}).start();

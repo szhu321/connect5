@@ -15,6 +15,12 @@ public abstract class Game implements GameConstants
 		playerPile = new TokenPile(PLAYER1);
 	}
 	
+	public Game(int playerNum)
+	{
+		gameBoard = new GameBoard();
+		playerPile = new TokenPile(playerNum);
+	}
+	
 	/**
 	 * Gets the token pile that should be currently be displayed.
 	 * @return Current TokenPile.
@@ -209,6 +215,7 @@ public abstract class Game implements GameConstants
 	public int getPlayer1Points() {return player1Points;}
 	public int getPlayer2Points() {return player2Points;}
 	public TokenPile getPlayerPile() {return playerPile;}
+	public void setPlayerPile(TokenPile pile) {playerPile = pile;} 
 	
 	public String toString()
 	{

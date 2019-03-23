@@ -2,20 +2,19 @@ package game;
 
 import java.net.Socket;
 
+import server.ClientSocketManager;
 import server.SocketManager;
 import server.SocketMaster;
 
 public class GameMulti extends Game implements SocketMaster
 {
-	private TokenPile player1Pile; //alias for the token pile in the super class;
 	private SocketManager socketManager;
 	
-	
-	public GameMulti(Socket socket)
+	public GameMulti(Socket socket, int playerNum)
 	{
-		player1Pile = getPlayerPile();
+		super(playerNum);
+		socketManager = new ClientSocketManager(this, socket);
 		//System.out.println("creating game Multi");
-		socketManager = new SocketManager(this, socket);
 		System.out.println("Created SocketManager");
 	}
 	
@@ -29,7 +28,7 @@ public class GameMulti extends Game implements SocketMaster
 	@Override
 	public TokenPile getOnScreenTokenPile()
 	{
-		return player1Pile;
+		return getPlayerPile();
 	}
 
 	@Override
@@ -63,6 +62,12 @@ public class GameMulti extends Game implements SocketMaster
 
 	@Override
 	public void receiveRole(SocketManager source, int playerNum) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void manageDisconnect(SocketManager source) {
 		// TODO Auto-generated method stub
 		
 	}

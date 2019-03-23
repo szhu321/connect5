@@ -32,15 +32,21 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 		this.player1 = player1;
 		this.player2 = player2;
 		shufflePlayers();
-		p1SManager = new SocketManager(this, player1);
-		p2SManager = new SocketManager(this, player2);
-		sendPlayerRoles();
+		sendPlayerRoles(); //sending this will tell the players to start the game.
+		p1SManager = new ServerSocketManager(this, player1);
+		p2SManager = new ServerSocketManager(this, player2);
+		
 	}
 	
 	private void sendPlayerRoles()
 	{
-		
-		
+		try {
+			new DataOutputStream(player1.getOutputStream()).writeInt(PLAYER1);
+			new DataOutputStream(player2.getOutputStream()).writeInt(PLAYER2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void shufflePlayers()
@@ -93,5 +99,18 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 	@Override
 	public void receiveRole(SocketManager source, int playerNum) {
 		//Do Nothing.
+	}
+
+	@Override
+	public void manageDisconnect(SocketManager source)
+	{
+		Server.write(source.toString() + " has disconnected.");
+		endSession();
+	}
+	
+	private void endSession()
+	{
+		p1SManager.close();
+		p2SManager.close();
 	}
 }
