@@ -3,10 +3,11 @@ package game;
 import java.net.Socket;
 
 import server.ClientSocketManager;
+import server.ClientSocketMaster;
 import server.SocketManager;
 import server.SocketMaster;
 
-public class GameMulti extends Game implements SocketMaster
+public class GameMulti extends Game implements ClientSocketMaster
 {
 	private SocketManager socketManager;
 	
@@ -68,6 +69,12 @@ public class GameMulti extends Game implements SocketMaster
 
 	@Override
 	public void manageDisconnect(SocketManager source) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receiveMove(SocketManager source, Token tk) {
 		// TODO Auto-generated method stub
 		
 	}

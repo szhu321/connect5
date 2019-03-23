@@ -18,11 +18,18 @@ public abstract class SocketManager implements ServerConstants
 	private ObjectInputStream objIn;
 	private ObjectOutputStream objOut;
 	
+	
+
 	private Thread thread;
 	
 	//The object that uses this class.
 	private SocketMaster master;
 	
+	/**
+	 * Creates a socketManager that will work with a socket.
+	 * @param master Link to the the class that uses this class.
+	 * @param socket The provided socket.
+	 */
 	public SocketManager(SocketMaster master, Socket socket)
 	{
 		mainSocket = socket;
@@ -94,58 +101,14 @@ public abstract class SocketManager implements ServerConstants
 	}
 	
 	//only one command at a time.
-	public synchronized void manageCommand(int command)
-	{
-		switch(command)
-		{
-		case MESSAGE: readMessage(); break;
-		case CONTINUE_STATUS: readStatus(); break;
-		case SEND_TOKEN: readToken(); break;
-		case SEND_ROLE: readRole();
-		}
-		waiting = false;
-	}
+	public abstract void manageCommand(int command);
 
-	private void readRole()
+	protected void readMove()
 	{
-		try {
-			int playerNum = objIn.readInt();
-			master.receiveRole(this, playerNum);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Read Player. Then read Color.
-	 */
-	private void readToken()
-	{
-		int player, number;
-		try {
-			player = objIn.readInt();
-			number = objIn.readInt();
-			Token tk = Token.createNumberToken(player, number);
-			master.receiveToken(this, tk);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	
-	private void readStatus()
-	{
-		try {
-			int status = objIn.readInt();
-			master.receiveStatus(this, status);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private void readMessage()
+	protected void readMessage()
 	{
 		try {
 			String message = (String)objIn.readObject();
@@ -209,6 +172,14 @@ public abstract class SocketManager implements ServerConstants
 			e.printStackTrace();
 		}
 	}
+	
+	//getters and setters.
+	public boolean isConnected() {return connected;}
+	public boolean isWaiting() {return waiting;}
+	public ObjectInputStream getObjIn() {return objIn;}
+	public ObjectOutputStream getObjOut() {return objOut;}
+	public SocketMaster getMaster() {return master;}
+	public void setWaiting(boolean waiting) {this.waiting = waiting;}
 	
 	public String toString()
 	{

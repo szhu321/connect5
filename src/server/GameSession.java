@@ -12,7 +12,7 @@ import game.GameMulti;
 import game.Token;
 
 
-public class GameSession implements Runnable, GameConstants, SocketMaster
+public class GameSession implements Runnable, GameConstants, ServerSocketMaster
 {
 	private static int sessionNum = 0;
 	private int session;
@@ -69,11 +69,6 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 	{
 		return session;
 	}
-	
-	private boolean areClientsConnected()
-	{
-		return !player1.isClosed() && !player2.isClosed(); 
-	}
 
 	@Override
 	public void receiveMessage(SocketManager source, String message)
@@ -83,29 +78,17 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 	}
 
 	@Override
-	public void receiveToken(SocketManager source, Token tk)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void receiveStatus(SocketManager source, int status)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void receiveRole(SocketManager source, int playerNum) {
-		//Do Nothing.
-	}
-
-	@Override
 	public void manageDisconnect(SocketManager source)
 	{
 		Server.write(source.toString() + " has disconnected.");
 		endSession();
+	}
+	
+	@Override
+	public void receiveMove(SocketManager source, Token tk)
+	{
+		
+		
 	}
 	
 	private void endSession()
@@ -113,4 +96,6 @@ public class GameSession implements Runnable, GameConstants, SocketMaster
 		p1SManager.close();
 		p2SManager.close();
 	}
+
+	
 }
