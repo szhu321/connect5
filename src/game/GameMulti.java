@@ -5,10 +5,11 @@ import java.net.Socket;
 import main.Connect5;
 import server.ClientSocketManager;
 import server.ClientSocketMaster;
+import server.ServerConstants;
 import server.SocketManager;
 import server.SocketMaster;
 
-public class GameMulti extends Game implements ClientSocketMaster
+public class GameMulti extends Game implements ClientSocketMaster, ServerConstants
 {
 	private ClientSocketManager socketManager;
 	private boolean gameOn = true;
@@ -17,6 +18,10 @@ public class GameMulti extends Game implements ClientSocketMaster
 	{
 		super(playerNum);
 		myTurn = (playerNum == PLAYER1) ? true:false;//sets the turn.
+//		if(myTurn)
+//			Connect5.getGameScene().print("System", "You go first!");
+//		else
+//			Connect5.getGameScene().print("System", "Waiting for opponent's move...");
 		socketManager = new ClientSocketManager(this, socket);
 		getPlayerPile().depopulateHand();//the server will provied the tokens.
 		startTokenAsker();
@@ -52,8 +57,19 @@ public class GameMulti extends Game implements ClientSocketMaster
 			if(getGameBoard().placeToken(tk, col))
 			{
 				swapTurn();
+				socketManager.sendMove(tk, col);
+				Connect5.getGameScene().print("System", "Waiting for Opponent...");
 				return tk;
 			}
+		}
+		return null;
+	}
+	
+	public Token placeToken(Token tk, int col)
+	{
+		if(getGameBoard().placeToken(tk, col))
+		{
+			return tk;
 		}
 		return null;
 	}
@@ -91,8 +107,13 @@ public class GameMulti extends Game implements ClientSocketMaster
 	@Override
 	public void receiveStatus(SocketManager source, int status)
 	{
-		
-		
+		if(status == CONTINUE)
+		{
+			swapTurn();
+			Connect5.getGameScene().print("System","It's your turn.");
+		}
+		else
+			Connect5.getGameScene().gameOverMulti(status);
 	}
 
 	@Override
@@ -103,9 +124,9 @@ public class GameMulti extends Game implements ClientSocketMaster
 	}
 
 	@Override
-	public void receiveMove(SocketManager source, Token tk) {
-		// TODO Auto-generated method stub
-		
+	public void receiveMove(SocketManager source, Token tk, int col)
+	{
+		Connect5.getGameScene().serverPlaceToken(tk, col);
 	}
 
 }

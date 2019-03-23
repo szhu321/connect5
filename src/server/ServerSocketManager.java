@@ -17,7 +17,7 @@ public class ServerSocketManager extends SocketManager
 	
 	public synchronized void manageCommand(int command)
 	{
-		Server.write("Command: " + command);
+		//Server.write("Command: " + command);
 		switch(command)
 		{
 		case MESSAGE: readMessage(); break;
@@ -29,12 +29,25 @@ public class ServerSocketManager extends SocketManager
 
 	private void sendToken()
 	{
-		Server.write("Client asked for token.");
+		//Server.write("Client asked for token.");
 		Token tk = master.transferToken(this);
 		try {
 			getObjOut().writeInt(SEND_TOKEN);
 			getObjOut().writeInt(tk.getPlayer());
 			getObjOut().writeInt(tk.getPoints());
+			getObjOut().flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendStatus(int status)
+	{
+		try {
+			getObjOut().writeInt(CONTINUE_STATUS);
+			getObjOut().flush();
+			getObjOut().writeInt(status);
 			getObjOut().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

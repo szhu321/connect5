@@ -26,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Connect5;
+import server.ServerConstants;
 
 public class GameScene implements GameConstants
 {
@@ -58,6 +59,8 @@ public class GameScene implements GameConstants
 		spriteAnimator = new SpriteAnimator();
 		this.game = game;
 		setUpGameScene();
+		if(game instanceof GameMulti)
+			print("System","Red Goes First! Game Start!");
 	}
 	
 	/**
@@ -93,6 +96,7 @@ public class GameScene implements GameConstants
 		textBox = new VBox(10);
 		textArea = new TextArea();
 		textArea.setEditable(false);
+		textArea.setWrapText(true);
 		textField = new TextField();
 		textBox.getChildren().addAll(textArea, textField);
 		
@@ -164,6 +168,18 @@ public class GameScene implements GameConstants
 		//checks game over. Multiplayer games have the server checking for wins.
 		if(game.isGameOver() && !(game instanceof GameMulti))
 			gameOver();
+	}
+	
+	public void serverPlaceToken(Token tk, int col)
+	{
+		Token placedToken = ((GameMulti)game).placeToken(tk, col);
+		if(placedToken != null)
+		{
+			SpriteWrapper sw = new FloatDrop(placedToken, -50, getTokenMomentum(placedToken)); //adding animation
+			spriteAnimator.addSpriteWrapper(sw);
+			game.calcPoints();
+			selected = -1;
+		}
 	}
 	
 	/**
@@ -349,7 +365,6 @@ public class GameScene implements GameConstants
 		{
 		case LOCAL_GAME: gameOverLocal(); break;
 		case SINGLE_GAME: gameOverSingle(); break;
-		case ONLINE_GAME: gameOverMulti(); break;
 		}
 	}
 	
@@ -366,9 +381,15 @@ public class GameScene implements GameConstants
 		
 	}
 	
-	private void gameOverMulti()
+	public void gameOverMulti(int status)
 	{
-		
+		stopGame();
+		if(status == ServerConstants.WIN)
+			print("Server", "You win!");
+		else if(status == ServerConstants.LOSE)
+			print("Server", "You lose!");
+		else if(status == ServerConstants.TIED)
+			print("Server", "A Tie!");
 	}
 	
 	

@@ -30,6 +30,16 @@ public class GameLocal extends Game
 		}
 		return null;
 	}
+	
+	public Token placeToken(Token tk, int col)
+	{
+		if(getGameBoard().placeToken(tk, col))
+		{
+			swapTurn();
+			return tk;
+		}
+		return null;
+	}
 
 	@Override
 	public int getGameType() {

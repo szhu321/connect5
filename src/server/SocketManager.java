@@ -102,7 +102,31 @@ public abstract class SocketManager implements ServerConstants
 
 	protected void readMove()
 	{
-		
+		try {
+			int player = objIn.readInt();
+			int number = objIn.readInt();
+			int col = objIn.readInt();
+			Token tk = Token.createNumberToken(player, number);
+			master.receiveMove(this, tk, col);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMove(Token tk, int col)
+	{
+		try {
+			objOut.writeInt(SEND_MOVE);//command
+			objOut.flush();
+			objOut.writeInt(tk.getPlayer());
+			objOut.writeInt(tk.getPoints());
+			objOut.writeInt(col);
+			objOut.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected void readMessage()

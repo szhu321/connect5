@@ -12,7 +12,7 @@ import game.GameMulti;
 import game.Token;
 
 
-public class GameSession implements Runnable, GameConstants, ServerSocketMaster
+public class GameSession implements Runnable, GameConstants, ServerConstants, ServerSocketMaster
 {
 	private static int sessionNum = 0;
 	private int session;
@@ -90,10 +90,43 @@ public class GameSession implements Runnable, GameConstants, ServerSocketMaster
 	}
 	
 	@Override
-	public void receiveMove(SocketManager source, Token tk)
+	public void receiveMove(SocketManager source, Token tk, int col)
 	{
+		game.placeToken(tk, col);
+		if(source == p1SManager)
+			p2SManager.sendMove(tk, col);
+		else
+			p1SManager.sendMove(tk, col);
 		
-		
+		//checks to see if the game is over.
+		if(game.isGameOver())
+		{
+			game.calcPoints();
+			int p1 = game.getPlayer1Points();
+			int p2 = game.getPlayer2Points();
+			if(p1 == p2)
+			{
+				p2SManager.sendStatus(TIED);
+				p1SManager.sendStatus(TIED);
+			}
+			else if(p1 > p2)
+			{
+				p2SManager.sendStatus(LOSE);
+				p1SManager.sendStatus(WIN);
+			}
+			else
+			{
+				p2SManager.sendStatus(WIN);
+				p1SManager.sendStatus(LOSE);
+			}
+		}
+		else
+		{
+			if(source == p1SManager)
+				p2SManager.sendStatus(CONTINUE);
+			else
+				p1SManager.sendStatus(CONTINUE);
+		}
 	}
 	
 	@Override
