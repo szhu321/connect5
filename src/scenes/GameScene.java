@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -37,6 +38,7 @@ public class GameScene implements GameConstants
 	private Scene scene;
 	private GridPane root;
 	private VBox textBox;
+	private Button exitBtn;
 	
 	//Gui Chunks
 	protected Label p1PtLbl;
@@ -72,6 +74,7 @@ public class GameScene implements GameConstants
 		setUpCanvas();
 		setUpTokenQueue();
 		setUpTextBox();
+		setUpExitGame();
 		createNewScene();
 		gameLoop = true;
 		//runs the gameloop
@@ -91,6 +94,12 @@ public class GameScene implements GameConstants
 		}.start();
 	}
 	
+	private void setUpExitGame()
+	{
+		exitBtn = new Button("Quit");
+		
+	}
+
 	private void setUpTextBox()
 	{
 		textBox = new VBox(10);
