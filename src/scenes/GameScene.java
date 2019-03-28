@@ -1,7 +1,6 @@
 package scenes;
 
 import animation.FloatDrop;
-import animation.GravityDrop;
 import animation.ImageLoader;
 import animation.SpriteAnimator;
 import animation.SpriteWrapper;
@@ -9,8 +8,6 @@ import game.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import main.Connect5;
 import server.ServerConstants;
 
@@ -97,7 +93,14 @@ public class GameScene implements GameConstants
 	private void setUpExitGame()
 	{
 		exitBtn = new Button("Quit");
-		
+		exitBtn.setOnAction(e -> 
+		{
+			String text = "Are you sure you want to leave?";
+			if(game.getGameType() == ONLINE_GAME)
+				text = "Really Leave?";
+			if(PromptWindow.openYesNoWindow(text))
+				Connect5.toMainMenuScene();
+		});
 	}
 
 	private void setUpTextBox()
@@ -315,7 +318,7 @@ public class GameScene implements GameConstants
 		root.setPadding(new Insets(20, 20, 20, 20));
 		
 		VBox rightContainer = new VBox(50);
-		rightContainer.getChildren().addAll(scoreBox, textBox);
+		rightContainer.getChildren().addAll(scoreBox, textBox, exitBtn);
 		VBox leftContainer = new VBox(20);
 		leftContainer.setAlignment(Pos.CENTER);
 		leftContainer.getChildren().addAll(canvas, tokenQueue);
