@@ -13,6 +13,12 @@ import scenes.*;
 
 public class Connect5 extends Application
 {
+	/*
+	 * TODO:
+	 * Disconnect players properly from servers.
+	 * Add a restart button.
+	 */
+	
 	//screen and items sizes
 	private static double scale = .7;
 	public static final double SCREEN_WIDTH = 850;
