@@ -2,6 +2,7 @@ package scenes;
 
 import animation.FloatDrop;
 import animation.ImageLoader;
+import animation.Spin;
 import animation.SpriteAnimator;
 import animation.SpriteWrapper;
 import game.*;
@@ -22,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 import main.Connect5;
 import server.ServerConstants;
 
@@ -171,8 +174,7 @@ public class GameScene implements GameConstants
 		Token placedToken = game.placeToken(selected, col);
 		if(placedToken != null)
 		{
-			SpriteWrapper sw = new FloatDrop(placedToken, -50, getTokenMomentum(placedToken)); //adding animation
-			spriteAnimator.addSpriteWrapper(sw);
+			addingTokenAnimation(placedToken);
 			game.calcPoints();
 			selected = -1;
 		}
@@ -187,11 +189,18 @@ public class GameScene implements GameConstants
 		Token placedToken = ((GameMulti)game).placeToken(tk, col);
 		if(placedToken != null)
 		{
-			SpriteWrapper sw = new FloatDrop(placedToken, -50, getTokenMomentum(placedToken)); //adding animation
-			spriteAnimator.addSpriteWrapper(sw);
+			addingTokenAnimation(placedToken);
 			game.calcPoints();
 			selected = -1;
 		}
+	}
+	
+	public static void addingTokenAnimation(Token token)
+	{
+		SpriteWrapper sw = new FloatDrop(token, -50, getTokenMomentum(token)); //adding animation
+		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
+		SpriteWrapper sw2 = new Spin(token, 7000);
+		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw2);
 	}
 	
 	/**
@@ -254,14 +263,18 @@ public class GameScene implements GameConstants
 			for(int y = 0; y < game.getGameBoard().colSize(); y++)
 				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
 		
+		
 		//draws the tokens.
 		
 		gc.setFont(new Font("impact", 26));
 		for(Token token: game.getGameBoard().getTokenCopy())
 			if(token != null)
 			{
+				
+				rotateGC(gc, token.getFaceAngle(), token.getX() + token.getWidth() / 2, token.getY() + token.getHeight() / 2);
 				gc.drawImage(token.getImage(), token.getX(), token.getY());
 				//draws the number on the token
+				
 				if(token.getPoints() != 0)
 				{
 					gc.setFill((token.getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
@@ -270,6 +283,12 @@ public class GameScene implements GameConstants
 					
 			}
 		gc.restore();
+	}
+	
+	private static void rotateGC(GraphicsContext gc, double angle, double centerX, double centerY)
+	{
+		Rotate r = new Rotate(angle, centerX, centerY);
+		gc.setTransform(new Affine(r));
 	}
 	
 	/**
