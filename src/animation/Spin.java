@@ -18,7 +18,7 @@ public class Spin extends SpriteWrapper
 		endTime = timeActiveMilliSeconds * 1000000;
 		//System.out.println("Endtime" + endTime);
 		timePassed = 0;
-		angularSpeed = .3;
+		angularSpeed = .1;
 		previousTick = System.nanoTime();
 	}
 
@@ -45,7 +45,7 @@ public class Spin extends SpriteWrapper
 
 	private void changeSpeed()
 	{
-		//
+		angularSpeed += .0005;
 	}
 
 	private void caculateNewLocation()

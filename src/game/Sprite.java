@@ -41,6 +41,7 @@ public abstract class Sprite implements Serializable
 	public double getFaceAngle(){return faceAngle;}	
 	public void setFaceAngle(double faceAngle) {this.faceAngle = faceAngle;}
 	public Image getImage() {return image;}
+	public void setImage(Image image) {this.image = image;}
 	public String getName(){return name;}
 	public void setName(String name) {this.name = name;}
 	public boolean isVisible() {return visible;}

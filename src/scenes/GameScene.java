@@ -199,7 +199,7 @@ public class GameScene implements GameConstants
 	{
 		SpriteWrapper sw = new FloatDrop(token, -50, getTokenMomentum(token)); //adding animation
 		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
-		SpriteWrapper sw2 = new Spin(token, 7000);
+		SpriteWrapper sw2 = new Spin(token, 700000);
 		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw2);
 	}
 	
