@@ -42,7 +42,7 @@ public class Connect5 extends Application
 		//setting up the window.
 		window = st;
 		window.setTitle("Connect 5");
-		window.setResizable(false);
+		//window.setResizable(false);
 		window.setOnCloseRequest(e -> System.exit(0));
 		
 		//loading images and going to the main menu.

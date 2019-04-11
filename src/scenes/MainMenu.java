@@ -3,6 +3,7 @@ package scenes;
 import game.GameConstants;
 import game.GameLocal;
 import game.GameSingle;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -50,6 +51,7 @@ public class MainMenu
 	public void setUpScene()
 	{
 		root = new VBox(50);
+		root.setAlignment(Pos.CENTER);
 		scene = new Scene(root, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
 		root.getChildren().addAll(singleBtn, localBtn, onlineBtn);
 	}

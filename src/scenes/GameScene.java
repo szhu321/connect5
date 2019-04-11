@@ -331,6 +331,7 @@ public class GameScene implements GameConstants
 	{
 		//setting up the new scene.
 		root = new GridPane();
+		root.setAlignment(Pos.CENTER);
 		scene = new Scene(root, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
 		root.setHgap(20);
 		root.setVgap(20);
