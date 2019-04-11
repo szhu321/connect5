@@ -6,6 +6,19 @@ import java.util.List;
 import game.GameConstants;
 import game.Sprite;
 
+/**
+ * This class is used to animate Sprites.
+ *	You would need to first wrap the sprite in a 
+ *	spriteWapper before adding that spriteWrapper into this class.
+ *	This class will run the spriteWrapper class's tick method 
+ *	repeatedly which will transform the Sprite based on the 
+ *	specifications in the spriteWapper. The spriteWrapper 
+ *	also has a boolean field called done, which this class
+ *	will check to see if the spriteWapper is done animating and 
+ *	thus can be removed.
+ * @author Sheng Wei
+ *	
+ */
 public class SpriteAnimator
 {
 	private static SpriteAnimator currentAnimator;

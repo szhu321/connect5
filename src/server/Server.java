@@ -40,7 +40,7 @@ public class Server extends Application implements GameConstants
 	public void start(Stage arg0) throws Exception
 	{
 		window = arg0;
-		window.setTitle("Connect 4 Server");
+		window.setTitle("Connect 5 Server");
 		//creating the container.
 		root = new VBox();
 		

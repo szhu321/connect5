@@ -199,8 +199,8 @@ public class GameScene implements GameConstants
 	{
 		SpriteWrapper sw = new FloatDrop(token, -50, getTokenMomentum(token)); //adding animation
 		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
-		SpriteWrapper sw2 = new Spin(token, 700000);
-		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw2);
+		//SpriteWrapper sw2 = new Spin(token, 700000);
+		//SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw2);
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class GameScene implements GameConstants
 				if(token.getPoints() != 0)
 				{
 					gc.setFill((token.getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
-					gc.fillText(token.getPoints() + "", token.getX() + 30, token.getY() + 48);
+					gc.fillText(token.getPoints() + "", token.getX() + (token.getWidth() / 2) - 6, token.getY() + (token.getHeight() / 2) + 11);
 				}
 					
 			}
@@ -317,7 +317,7 @@ public class GameScene implements GameConstants
 				{
 					gc.setFont(new Font("impact", (i == selected) ? 31 : 30));
 					gc.setFill((tq[i].getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
-					gc.fillText(tq[i].getPoints() + "", 65 + (i * 100), 70);
+					gc.fillText(tq[i].getPoints() + "", 63 + (i * 100), 68);
 				}
 			}
 		}
