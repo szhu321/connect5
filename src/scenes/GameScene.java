@@ -102,7 +102,10 @@ public class GameScene implements GameConstants
 			if(game.getGameType() == ONLINE_GAME)
 				text = "Really Leave?";
 			if(PromptWindow.openYesNoWindow(text))
+			{
+				game.close();
 				Connect5.toMainMenuScene();
+			}
 		});
 	}
 

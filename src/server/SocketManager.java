@@ -188,6 +188,7 @@ public abstract class SocketManager implements ServerConstants
 	{
 		try {
 			mainSocket.close();
+			connected = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

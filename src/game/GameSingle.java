@@ -42,4 +42,9 @@ public class GameSingle extends Game
 	{
 		return GameConstants.SINGLE_GAME;
 	}
+	
+	public void close()
+	{
+		System.out.println("Single Game Closed");
+	}
 }

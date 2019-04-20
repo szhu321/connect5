@@ -225,4 +225,6 @@ public abstract class Game implements GameConstants
 		result += "Player2 Score: " + player2Points + "\n";
 		return result;
 	}
+	
+	public abstract void close();
 }

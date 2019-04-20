@@ -50,4 +50,9 @@ public class GameLocal extends Game
 	{
 		return player2Pile;
 	}
+	
+	public void close()
+	{
+		System.out.println("Local Game Closed");
+	}
 }

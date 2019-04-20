@@ -128,5 +128,11 @@ public class GameMulti extends Game implements ClientSocketMaster, ServerConstan
 	{
 		Connect5.getGameScene().serverPlaceToken(tk, col);
 	}
+	
+	public void close()
+	{
+		socketManager.close();
+		System.out.println("Online game Closed");
+	}
 
 }
