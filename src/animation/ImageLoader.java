@@ -2,6 +2,7 @@ package animation;
 
 import game.GameConstants;
 import javafx.scene.image.Image;
+import main.Connect5;
 
 /**
  * This class will load all required images into the game
@@ -18,9 +19,9 @@ public class ImageLoader implements GameConstants
 	
 	public static void initImages()
 	{
-		RED_BLANK = new Image("file:resources/images/tile_red.png");//, 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
-		BLACK_BLANK = new Image("file:resources/images/tile_black.png");//, 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
-		EMPTY_TILE = new Image("file:resources/images/tile_empty.png");//, 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
+		RED_BLANK = new Image("file:resources/images/tile_red.png", 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
+		BLACK_BLANK = new Image("file:resources/images/tile_black.png", 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
+		EMPTY_TILE = new Image("file:resources/images/tile_empty.png", 100 * Connect5.getScale(), 100 * Connect5.getScale(), false, true);
 	}
 	
 	/**

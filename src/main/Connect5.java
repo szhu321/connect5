@@ -4,9 +4,6 @@ import java.net.Socket;
 
 import animation.ImageLoader;
 import game.Game;
-import game.GameBoard;
-import game.GameConstants;
-import game.NumberToken;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import scenes.*;
@@ -20,8 +17,8 @@ public class Connect5 extends Application
 	 */
 	
 	//screen and items sizes
-	private static double scale = .7;
-	public static final double SCREEN_WIDTH = 850;
+	private static double scale = .8;
+	public static final double SCREEN_WIDTH = 1000;
 	public static final double SCREEN_HEIGHT = 800;
 	
 	
