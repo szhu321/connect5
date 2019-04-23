@@ -174,6 +174,7 @@ public class GameScene implements GameConstants
 		if(game.getGameBoard().isColFull(col)) //selected column is full
 			return;
 
+		//System.out.println("Where");
 		Token placedToken = game.placeToken(selected, col);
 		if(placedToken != null)
 		{
@@ -413,7 +414,10 @@ public class GameScene implements GameConstants
 	
 	private void gameOverSingle()
 	{
-		
+		if(game.getPlayer1Points() == game.getPlayer2Points())
+			print("System", "It was a Tie!");
+		else
+			print("System", ((game.getPlayer1Points() > game.getPlayer2Points()) ? "Red":"Black") + " wins!");
 	}
 	
 	public void gameOverMulti(int status)
