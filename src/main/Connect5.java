@@ -64,18 +64,21 @@ public class Connect5 extends Application
 	public static void toServerScene()
 	{
 		serverPage = new ServerPage();
+		Style.addTextStyle(serverPage.getScene());
 		window.setScene(serverPage.getScene());
 	}
 	
 	public static void toMainMenuScene()
 	{
 		mainMenu = new MainMenu();
+		Style.addTextStyle(mainMenu.getScene());
 		window.setScene(mainMenu.getScene());
 	}
 	
 	public static void toServerLounge(Socket server)
 	{
 		serverLounge = new ServerLounge(server);
+		Style.addTextStyle(serverLounge.getScene());
 		window.setScene(serverLounge.getScene());
 	}
 	

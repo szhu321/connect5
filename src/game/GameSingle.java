@@ -1,7 +1,6 @@
 package game;
 
 import manage.Manager;
-import scenes.GameScene;
 
 public class GameSingle extends Game
 {
@@ -19,13 +18,25 @@ public class GameSingle extends Game
 	public Token placeToken(int handIdx, int col)
 	{
 		//System.out.println("Why");
+		if(!myTurn)
+			return null;
 		Token tk = getPlayerPile().getToken(handIdx);
-		if(myTurn && getGameBoard().placeToken(tk, col))
+		if(getGameBoard().placeToken(tk, col))
 		{
 			myTurn = !myTurn;
 			//System.out.println("Hello");
 			getPlayerPile().populateHand(); //add a new token to the hand.
-			makeMove();
+			
+			new Thread(()->
+			{
+				try {
+					Thread.sleep(1000);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				makeMove();
+			}).start();;
 			return tk;
 		}
 		return null;
@@ -41,6 +52,11 @@ public class GameSingle extends Game
 		Token[] ATokens = cpuPile.getCurrentHandCopy();
 		int[][] gameBoard = getGameBoard().getPlayerGrid();
 		//random Ai
+		
+		
+		
+		
+		
 		Token tk = cpuPile.getToken((int)(Math.random() * 3));
 		int col;
 		do
@@ -48,6 +64,14 @@ public class GameSingle extends Game
 			col = (int)(Math.random() * 9);
 		}
 		while(!(getGameBoard().placeToken(tk, col)));
+		
+		
+		
+		
+		
+		
+		
+		
 		Manager.addTokenAnimation(tk);
 		cpuPile.populateHand(); //add a new token to the hand.
 		myTurn = true;

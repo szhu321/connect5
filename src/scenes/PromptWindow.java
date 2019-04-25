@@ -43,7 +43,9 @@ public class PromptWindow
 		btnContainer.getChildren().addAll(yes, no);
 		container.getChildren().addAll(text, btnContainer);
 		
-		Scene scene = new Scene(container ,200, 100);
+		Scene scene = new Scene(container);
+		Style.addTextStyle(scene);
+		
 		window.setScene(scene);
 		window.setOnCloseRequest(e -> answer = false);
 		window.centerOnScreen();

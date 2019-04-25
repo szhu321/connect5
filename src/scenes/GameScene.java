@@ -293,6 +293,9 @@ public class GameScene implements GameConstants
 		//adding stuff to scene
 		root.add(rightContainer, 1, 0);
 		root.add(leftContainer, 0, 0);
+		
+		//adding styling
+		Style.addTextStyle(scene);
 	}
 	
 	/**
