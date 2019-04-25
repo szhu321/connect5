@@ -6,6 +6,7 @@ import animation.ImageLoader;
 import game.Game;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import manage.Manager;
 import scenes.*;
 
 public class Connect5 extends Application
@@ -23,7 +24,7 @@ public class Connect5 extends Application
 	
 	
 	private static Stage window;
-	private static GameScene gameScene;
+	private static Manager manager;
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
 	private static ServerLounge serverLounge;
@@ -52,12 +53,12 @@ public class Connect5 extends Application
 	
 	public static void createNewManager(Game game)
 	{
-		gameScene = new GameScene(game);
+		manager = new Manager(game);
 	}
 
 	public static void toManagerScene()
 	{
-		window.setScene(gameScene.getScene());
+		window.setScene(Manager.getGameScene().getScene());
 	}
 	
 	public static void toServerScene()
@@ -80,5 +81,4 @@ public class Connect5 extends Application
 	
 	public static double getScale(){return scale;}
 	public static void setScale(double scale){Connect5.scale = scale;}
-	public static GameScene getGameScene() {return gameScene;}
 }

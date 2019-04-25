@@ -8,14 +8,32 @@ public class Test
 {
 	public static void main(String[] args)
 	{	
-//		GameBoard gb = new GameBoard();
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER2, 3), 0);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 3);
-//		gb.placeToken(NumberToken.createNumberToken(GameConstants.PLAYER1, 3), 4);
-//		//gb.clearBoard();
-//		gb.removeToken(5, 5);
-//		System.out.println(gb);
-		
+		try
+		{
+			throw new NullPointerException();
+		}catch(ArithmeticException e)
+		{
+			System.out.println(1);
+		}finally
+		{
+			System.out.println(2);
+		}
 	}
+	
+	public static void a()
+	{
+		try
+		{
+			throw new RuntimeException();
+			
+		}catch(NullPointerException e)
+		{
+			System.out.println(5);
+			
+		}finally
+		{
+			System.out.println(7);
+		}
+	}
+	//finally will only not execute for uncaught exception and system.exit.
 }

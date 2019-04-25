@@ -1,5 +1,6 @@
 package game;
 
+import manage.Manager;
 import scenes.GameScene;
 
 public class GameSingle extends Game
@@ -47,7 +48,7 @@ public class GameSingle extends Game
 			col = (int)(Math.random() * 9);
 		}
 		while(!(getGameBoard().placeToken(tk, col)));
-		GameScene.addingTokenAnimation(tk);
+		Manager.addTokenAnimation(tk);
 		cpuPile.populateHand(); //add a new token to the hand.
 		myTurn = true;
 	}

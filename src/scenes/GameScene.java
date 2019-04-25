@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import main.Connect5;
+import manage.Manager;
 import server.ServerConstants;
 
 public class GameScene implements GameConstants
@@ -48,19 +49,16 @@ public class GameScene implements GameConstants
 	private TextField textField;
 	
 	//backend
-	private Game game;
-	private boolean gameLoop;
 	private int selected = -1;
 	
 	//animation
 	private SpriteAnimator spriteAnimator;
 	
-	public GameScene(Game game)
+	public GameScene()
 	{
 		spriteAnimator = new SpriteAnimator();
-		this.game = game;
 		setUpGameScene();
-		if(game instanceof GameMulti)
+		if(Manager.getGame() instanceof GameMulti)
 			print("System","Red Goes First! Game Start!");
 	}
 	
@@ -75,38 +73,12 @@ public class GameScene implements GameConstants
 		setUpTextBox();
 		setUpExitGame();
 		createNewScene();
-		gameLoop = true;
-		//runs the gameloop
-		new Thread() {
-			public void run()
-			{
-				while(gameLoop)
-				{
-					Platform.runLater(() -> updateGUI());
-					try {
-						Thread.sleep(SLEEP_MILITIME);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
 	}
 	
 	private void setUpExitGame()
 	{
 		exitBtn = new Button("Quit");
-		exitBtn.setOnAction(e -> 
-		{
-			String text = "Are you sure you want to leave?";
-			if(game.getGameType() == ONLINE_GAME)
-				text = "Really Leave?";
-			if(PromptWindow.openYesNoWindow(text))
-			{
-				game.close();
-				Connect5.toMainMenuScene();
-			}
-		});
+		exitBtn.setOnAction(e -> Manager.closePrompt());
 	}
 
 	private void setUpTextBox()
@@ -125,8 +97,9 @@ public class GameScene implements GameConstants
 			if(!text.equals(""))
 			{
 				print("You",text);
-				if(game instanceof GameMulti)
-					((GameMulti)game).sendMessage(text);
+				Game tempGame = Manager.getGame();
+				if(tempGame instanceof GameMulti)
+					((GameMulti)tempGame).sendMessage(text);
 			}
 			textField.setText("");
 		});
@@ -144,8 +117,8 @@ public class GameScene implements GameConstants
 		//labels for the scores
 		p1PtLbl = new Label("Red  :");
 		p2PtLbl = new Label("Black:");
-		p1PtTxt = new Text(game.getPlayer1Points() + "");
-		p2PtTxt = new Text(game.getPlayer2Points() + "");
+		p1PtTxt = new Text("0");
+		p2PtTxt = new Text("0");
 		
 		//adding to the scoreBox
 		scoreBox.add(p1PtLbl, 0, 0);
@@ -159,7 +132,7 @@ public class GameScene implements GameConstants
 	 */
 	private void setUpCanvas()
 	{
-		canvas = new Canvas(game.getGameBoard().colSize() * 100 * Connect5.getScale(), game.getGameBoard().rowSize() * 100 * Connect5.getScale());
+		canvas = new Canvas(Manager.getGame().getGameBoard().colSize() * 100 * Connect5.getScale(), Manager.getGame().getGameBoard().rowSize() * 100 * Connect5.getScale());
 		canvas.setOnMouseClicked(e ->
 		{
 			placeToken(e.getX());
@@ -171,42 +144,10 @@ public class GameScene implements GameConstants
 		if(selected == -1) //no token is selected
 			return;
 		int col = (int)(x / (100 * Connect5.getScale()));
-		if(game.getGameBoard().isColFull(col)) //selected column is full
-			return;
-
-		//System.out.println("Where");
-		Token placedToken = game.placeToken(selected, col);
-		if(placedToken != null)
-		{
-			addingTokenAnimation(placedToken);
-			game.calcPoints();
-			selected = -1;
-		}
+		Manager.placeToken(selected, col);
 		
-		//checks game over. Multiplayer games have the server checking for wins.
-		if(game.isGameOver() && !(game instanceof GameMulti))
-			gameOver();
 	}
-	
-	public void serverPlaceToken(Token tk, int col)
-	{
-		Token placedToken = ((GameMulti)game).placeToken(tk, col);
-		if(placedToken != null)
-		{
-			addingTokenAnimation(placedToken);
-			game.calcPoints();
-			selected = -1;
-		}
-	}
-	
-	public static void addingTokenAnimation(Token token)
-	{
-		SpriteWrapper sw = new FloatDrop(token, -50, getTokenMomentum(token)); //adding animation
-		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
-		//SpriteWrapper sw2 = new Spin(token, 700000);
-		//SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw2);
-	}
-	
+		
 	/**
 	 * creates a queue that holds available tokens to be used.
 	 */
@@ -230,7 +171,7 @@ public class GameScene implements GameConstants
 		y -= 10;
 		
 		int select = -1;
-		for(int i = 0; i < game.getOnScreenTokenPile().getCurrentHandCopy().length; i++)
+		for(int i = 0; i < Manager.getGame().getOnScreenTokenPile().getCurrentHandCopy().length; i++)
 		{
 			if(x < 100 + (100 * i) && x > (100 * i) && y > 0 && y < 100)
 				select = i;
@@ -263,15 +204,15 @@ public class GameScene implements GameConstants
 		gc.setFill(Color.BLACK);
 		
 		//draws the board.
-		for(int x = 0; x < game.getGameBoard().rowSize(); x++)
-			for(int y = 0; y < game.getGameBoard().colSize(); y++)
+		for(int x = 0; x < Manager.getGame().getGameBoard().rowSize(); x++)
+			for(int y = 0; y < Manager.getGame().getGameBoard().colSize(); y++)
 				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
 		
 		
 		//draws the tokens.
 		
 		gc.setFont(new Font("impact", 26));
-		for(Token token: game.getGameBoard().getTokenCopy())
+		for(Token token: Manager.getGame().getGameBoard().getTokenCopy())
 			if(token != null)
 			{
 				
@@ -306,7 +247,7 @@ public class GameScene implements GameConstants
 		gc.setFill(Color.GREEN);
 		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		gc.setFill(Color.BLACK);
-		Token[] tq = game.getOnScreenTokenPile().getCurrentHandCopy();
+		Token[] tq = Manager.getGame().getOnScreenTokenPile().getCurrentHandCopy();
 		
 		
 		for(int i = 0; i < tq.length; i++)
@@ -375,8 +316,8 @@ public class GameScene implements GameConstants
 	
 	public void updateScoreBox()
 	{
-		p1PtTxt.setText(game.getPlayer1Points() + "");
-		p2PtTxt.setText(game.getPlayer2Points() + "");
+		p1PtTxt.setText(Manager.getGame().getPlayer1Points() + "");
+		p2PtTxt.setText(Manager.getGame().getPlayer2Points() + "");
 	}
 	
 	public void stopGame()
@@ -391,35 +332,6 @@ public class GameScene implements GameConstants
 		});
 	}
 	
-	/**
-	 * Manages game over
-	 */
-	public void gameOver()
-	{
-		stopGame();
-		switch(game.getGameType())
-		{
-		case LOCAL_GAME: gameOverLocal(); break;
-		case SINGLE_GAME: gameOverSingle(); break;
-		}
-	}
-	
-	private void gameOverLocal()
-	{
-		if(game.getPlayer1Points() == game.getPlayer2Points())
-			print("System", "It was a Tie!");
-		else
-			print("System", ((game.getPlayer1Points() > game.getPlayer2Points()) ? "Red":"Black") + " wins!");
-	}
-	
-	private void gameOverSingle()
-	{
-		if(game.getPlayer1Points() == game.getPlayer2Points())
-			print("System", "It was a Tie!");
-		else
-			print("System", ((game.getPlayer1Points() > game.getPlayer2Points()) ? "Red":"Black") + " wins!");
-	}
-	
 	public void gameOverMulti(int status)
 	{
 		stopGame();
@@ -431,33 +343,18 @@ public class GameScene implements GameConstants
 			print("Server", "A Tie!");
 	}
 	
-	
-	public static int getTokenMomentum(Token tk)
-	{
-		int momentum;
-		switch(tk.getPoints())
-		{
-		case 0: momentum = FloatDrop.LOW_MOMENTUM; break;
-		case 1: momentum = FloatDrop.MEDIUM_MOMENTUM; break;
-		case 2: momentum = FloatDrop.HIGH_MOMENTUM; break;
-		case 3: momentum = FloatDrop.EXTREME_MOMENTUM; break;
-		default: momentum = FloatDrop.LOW_MOMENTUM;
-		}
-		return momentum;
-	}
-	
-	public Game getGame()
-	{
-		return game;
-	}
-	
 	public Scene getScene()
 	{
 		return scene;
 	}
 	
+	public void setSelected(int selected)
+	{
+		this.selected = selected;
+	}
+	
 	public String toString()
 	{
-		return game.toString();
+		return Manager.getGame().toString();
 	}
 }
