@@ -15,7 +15,7 @@ public class Manager implements GameConstants
 	private static Game game; //backend for the game.
 	private static GameScene screen; //frontend for the game.
 	private static SpriteAnimator spriteAnimator = new SpriteAnimator();
-	private boolean gameLoop;
+	private static boolean gameLoop;
 	
 	
 	public Manager(int gameType)
@@ -51,9 +51,14 @@ public class Manager implements GameConstants
 				while(gameLoop)
 				{
 					//TODO: account for the time spent running the GUI.
+					long timebefore = System.currentTimeMillis();
 					Platform.runLater(() -> screen.updateGUI());
+					long timePassedMilli = System.currentTimeMillis() - timebefore;
+					long sleepTime = (SLEEP_MILITIME - timePassedMilli) > 0 ? (SLEEP_MILITIME - timePassedMilli) : 0;
+					System.out.println(sleepTime);
+					
 					try {
-						Thread.sleep(SLEEP_MILITIME);
+						Thread.sleep((sleepTime));
 					}catch(InterruptedException e){
 						e.printStackTrace();
 					}
@@ -62,8 +67,9 @@ public class Manager implements GameConstants
 		}.start();
 	}
 	
-	public void close()
+	public static void close()
 	{
+		gameLoop = false;
 		game.close();
 	}
 	
@@ -74,7 +80,7 @@ public class Manager implements GameConstants
 			text = "Really Leave?";
 		if(PromptWindow.openYesNoWindow(text))
 		{
-			game.close();
+			close();
 			Connect5.toMainMenuScene();
 		}
 	}
@@ -106,8 +112,8 @@ public class Manager implements GameConstants
 		screen.stopGame();
 		switch(game.getGameType())
 		{
-		case LOCAL_GAME: gameOverLocal(); break;
-		case SINGLE_GAME: gameOverSingle(); break;
+			case LOCAL_GAME: gameOverLocal(); break;
+			case SINGLE_GAME: gameOverSingle(); break;
 		}
 	}
 	
@@ -150,11 +156,11 @@ public class Manager implements GameConstants
 		int momentum;
 		switch(tk.getPoints())
 		{
-		case 0: momentum = FloatDrop.LOW_MOMENTUM; break;
-		case 1: momentum = FloatDrop.MEDIUM_MOMENTUM; break;
-		case 2: momentum = FloatDrop.HIGH_MOMENTUM; break;
-		case 3: momentum = FloatDrop.EXTREME_MOMENTUM; break;
-		default: momentum = FloatDrop.LOW_MOMENTUM;
+			case 0: momentum = FloatDrop.LOW_MOMENTUM; break;
+			case 1: momentum = FloatDrop.MEDIUM_MOMENTUM; break;
+			case 2: momentum = FloatDrop.HIGH_MOMENTUM; break;
+			case 3: momentum = FloatDrop.EXTREME_MOMENTUM; break;
+			default: momentum = FloatDrop.LOW_MOMENTUM;
 		}
 		return momentum;
 	}

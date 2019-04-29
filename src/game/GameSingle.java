@@ -6,12 +6,14 @@ public class GameSingle extends Game
 {
 	private TokenPile cpuPile;
 	private Thread brain;
+	private int[] aiChoiceWeight;
 	
 	public GameSingle()
 	{
 		myTurn = true;
 		cpuPile = new TokenPile(PLAYER2);
 		brain = new Thread(() -> makeMove());
+		aiChoiceWeight = new int[getGameBoard().colSize()];
 	}
 
 	@Override
@@ -35,7 +37,8 @@ public class GameSingle extends Game
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				makeMove();
+				if(!isGameOver())
+					makeMove();
 			}).start();;
 			return tk;
 		}
@@ -54,6 +57,22 @@ public class GameSingle extends Game
 		//random Ai
 		
 		
+		/*
+		 * Some Ai implementation methods.
+		 * *check for and 3s and place a token there.
+		 * *check for any twos and threes and place them there.
+		 * *if there is a available four slot and its enough points then put it there to connect 5.
+		 * 
+		 */
+		
+		/*
+		 * Implement a danger rating.
+		 * If the ai's score is high the danger rating is low.
+		 * else the danger rating is high.
+		 * 
+		 * Depending on the danger rating place numbered tokens
+		 * accordingly.
+		 */
 		
 		
 		

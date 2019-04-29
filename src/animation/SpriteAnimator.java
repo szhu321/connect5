@@ -70,6 +70,15 @@ public class SpriteAnimator
 		running = false;
 	}
 	
+	/**
+	 * Checks to see if there is anything animating.
+	 * @return true if there is something animating, false otherwise.
+	 */
+	public boolean isRunning()
+	{
+		return spriteWrapper.size() != 0;
+	}
+	
 	public static SpriteAnimator getCurrentAnimator()
 	{
 		return currentAnimator;
