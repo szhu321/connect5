@@ -17,16 +17,13 @@ public class Manager implements GameConstants
 	private static SpriteAnimator spriteAnimator = new SpriteAnimator();
 	private static boolean gameLoop;
 	
+	//Used to keep track of spinning pieces.
+	private static int[][] animationGrid;
+	
 	
 	public Manager(int gameType)
 	{
-		switch(gameType)
-		{
-			case LOCAL_GAME: game = new GameLocal(); break;
-			case ONLINE_GAME: game = new GameMulti(); break;
-			default: game = new GameSingle();
-		}
-		startGame();
+		this((gameType == LOCAL_GAME ? new GameLocal(): (gameType == ONLINE_GAME? new GameMulti(): new GameSingle())));
 	}
 	
 	public Manager(Game game)
