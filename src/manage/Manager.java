@@ -1,6 +1,9 @@
 package manage;
 
+import java.util.ArrayList;
+
 import animation.FloatDrop;
+import animation.Spin;
 import animation.SpriteAnimator;
 import animation.SpriteWrapper;
 import game.*;
@@ -31,6 +34,10 @@ public class Manager implements GameConstants
 		this.game = game;
 		screen = new GameScene();
 		startGame();
+		animationGrid = new int[game.getGameBoard().rowSize()][game.getGameBoard().colSize()];
+		for(int row = 0; row < animationGrid.length; row++)
+			for(int col = 0; col < animationGrid[0].length; col++)
+				animationGrid[row][col] = VOID_PLAYER;
 	}
 	
 	/**
@@ -62,6 +69,48 @@ public class Manager implements GameConstants
 				}
 			}
 		}.start();
+	}
+	
+	private void addRotationalAnimation()
+	{
+		
+				
+	}
+	
+	public static ArrayList<Token[]> tokenSpinQueue = new ArrayList<Token[]>();
+	
+	public static void notifyConnect4(int row, int col, Direction dir)
+	{
+		int rowInc = 0;
+		int colInc = 0;
+		switch(dir)
+		{
+		case VERTICAL: rowInc = 1; break;
+		case HORIZONTAL: colInc = 1; break;
+		case UP_LEFT: rowInc = 1; colInc = -1; break;
+		case UP_RIGHT: rowInc = 1; colInc = 1;
+		}
+		
+		boolean animate = false;
+		for(int i = 0; i < 4; i++)
+		{
+			if(animationGrid[row + (i * rowInc)][col + (i * colInc)] == VOID_PLAYER)
+			{
+				animate = true;
+				animationGrid[row + (i * rowInc)][col + (i * colInc)] = YES_PLAYER;
+			}
+		}
+		
+		if(animate)
+		{
+			Token[] tempTs = new Token[4];
+			for(int i = 0; i < 4; i++)
+			{
+				Token token = game.getGameBoard().getToken(row + (i * rowInc), col + (i * colInc));
+				tempTs[i] = token;
+			}
+			spriteAnimator.addToSpinQueue(tempTs);
+		}
 	}
 	
 	public static void close()

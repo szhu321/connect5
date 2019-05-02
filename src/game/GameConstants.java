@@ -7,6 +7,7 @@ public interface GameConstants
 	public static final int PLAYER1 = 1;
 	public static final int PLAYER2 = 2;
 	public static final int VOID_PLAYER = 0;
+	public static final int YES_PLAYER = 20;
 
 	public static final int SIZE_ROW = 8;
 	public static final int SIZE_COL = 9;

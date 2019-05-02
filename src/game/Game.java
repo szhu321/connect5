@@ -1,5 +1,6 @@
 package game;
 
+import manage.Manager;
 
 public abstract class Game implements GameConstants
 {
@@ -106,6 +107,7 @@ public abstract class Game implements GameConstants
 				if(tempBoard[row][col] == player && tempBoard[row + 1][col] == player
 						&& tempBoard[row + 2][col] == player && tempBoard[row + 3][col] == player)
 				{
+					Manager.notifyConnect4(row, col, Direction.VERTICAL);
 					result += gameBoard.getToken(row, col).getPoints() + 
 							gameBoard.getToken(row + 1, col).getPoints() +
 							gameBoard.getToken(row + 2, col).getPoints() +
@@ -120,6 +122,7 @@ public abstract class Game implements GameConstants
 				if(tempBoard[row][col] == player && tempBoard[row][col + 1] == player
 						&& tempBoard[row][col + 2] == player && tempBoard[row][col + 3] == player)
 				{
+					Manager.notifyConnect4(row, col, Direction.HORIZONTAL);
 					result += gameBoard.getToken(row, col).getPoints() + 
 							gameBoard.getToken(row, col + 1).getPoints() +
 							gameBoard.getToken(row, col + 2).getPoints() +
@@ -134,6 +137,7 @@ public abstract class Game implements GameConstants
 				if(tempBoard[row][col] == player && tempBoard[row + 1][col + 1] == player
 						&& tempBoard[row + 2][col + 2] == player && tempBoard[row + 3][col + 3] == player)
 				{
+					Manager.notifyConnect4(row, col, Direction.UP_RIGHT);
 					result += gameBoard.getToken(row, col).getPoints() + 
 							gameBoard.getToken(row + 1, col + 1).getPoints() +
 							gameBoard.getToken(row + 2, col + 2).getPoints() +
@@ -148,6 +152,7 @@ public abstract class Game implements GameConstants
 				if(tempBoard[row][col] == player && tempBoard[row + 1][col - 1] == player
 						&& tempBoard[row + 2][col - 2] == player && tempBoard[row + 3][col - 3] == player)
 				{
+					Manager.notifyConnect4(row, col, Direction.UP_LEFT);
 					result += gameBoard.getToken(row, col).getPoints() + 
 							gameBoard.getToken(row + 1, col - 1).getPoints() +
 							gameBoard.getToken(row + 2, col - 2).getPoints() +

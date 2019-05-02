@@ -5,6 +5,7 @@ import java.util.List;
 
 import game.GameConstants;
 import game.Sprite;
+import game.Token;
 
 /**
  * This class is used to animate Sprites.
@@ -24,6 +25,9 @@ public class SpriteAnimator
 	private static SpriteAnimator currentAnimator;
 	private List<SpriteWrapper> spriteWrapper;
 	private boolean running;
+	
+	//added animation for token spinning.
+	private ArrayList<Token[]> tokenSpinQueue = new ArrayList<Token[]>();
 	
 	public SpriteAnimator()
 	{
@@ -60,6 +64,24 @@ public class SpriteAnimator
 				}
 			}
 		}).start();
+	}
+	
+	private void manageSpinTokens()
+	{
+		while(true)
+		{
+//			for(int i = 0; i < 4; i++)
+//			{
+//				Token token = game.getGameBoard().getToken(row + (i * rowInc), col + (i * colInc));
+//				SpriteWrapper sw = new Spin(token, 2000); //adding animation
+//				SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
+//			}
+		}
+	}
+	
+	public void addToSpinQueue(Token[] tokens)
+	{
+		tokenSpinQueue.add(tokens);
 	}
 	
 	/**
