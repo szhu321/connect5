@@ -17,10 +17,10 @@ public class NumberToken extends Token
 	
 	public int getNumber() {return number;}
 	
-	public String toString()
-	{
-		return "Player:" + getPlayer() + " Number:" + number;
-	}
+//	public String toString()
+//	{
+//		return "Player:" + getPlayer() + " Number:" + number;
+//	}
 
 	@Override
 	public int getPoints()

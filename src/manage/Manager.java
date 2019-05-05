@@ -59,7 +59,7 @@ public class Manager implements GameConstants
 					Platform.runLater(() -> screen.updateGUI());
 					long timePassedMilli = System.currentTimeMillis() - timebefore;
 					long sleepTime = (SLEEP_MILITIME - timePassedMilli) > 0 ? (SLEEP_MILITIME - timePassedMilli) : 0;
-					System.out.println(sleepTime);
+					//System.out.println(sleepTime);
 					
 					try {
 						Thread.sleep((sleepTime));
@@ -70,14 +70,6 @@ public class Manager implements GameConstants
 			}
 		}.start();
 	}
-	
-	private void addRotationalAnimation()
-	{
-		
-				
-	}
-	
-	public static ArrayList<Token[]> tokenSpinQueue = new ArrayList<Token[]>();
 	
 	public static void notifyConnect4(int row, int col, Direction dir)
 	{

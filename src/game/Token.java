@@ -2,6 +2,7 @@ package game;
 
 import animation.ImageLoader;
 import javafx.scene.image.Image;
+import main.Connect5;
 
 public abstract class Token extends Sprite implements GameConstants
 {
@@ -23,6 +24,6 @@ public abstract class Token extends Sprite implements GameConstants
 	
 	public static NumberToken createNumberToken(int player, int number)
 	{
-		return new NumberToken(ImageLoader.getTokenImagePlayer(player, number), 0, 0 , 100, 100, player, number);
+		return new NumberToken(ImageLoader.getTokenImagePlayer(player, number), 0, 0 , 100 * Connect5.getScale(), 100 * Connect5.getScale(), player, number);
 	}
 }

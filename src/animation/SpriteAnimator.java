@@ -6,6 +6,8 @@ import java.util.List;
 import game.GameConstants;
 import game.Sprite;
 import game.Token;
+import javafx.application.Platform;
+import util.Util;
 
 /**
  * This class is used to animate Sprites.
@@ -27,7 +29,7 @@ public class SpriteAnimator
 	private boolean running;
 	
 	//added animation for token spinning.
-	private ArrayList<Token[]> tokenSpinQueue = new ArrayList<Token[]>();
+	//private ArrayList<Token[]> tokenSpinQueue = new ArrayList<Token[]>();
 	
 	public SpriteAnimator()
 	{
@@ -49,16 +51,12 @@ public class SpriteAnimator
 			running = true;
 			while(running)
 			{
-				for(int i = spriteWrapper.size() - 1; i >= 0; i--)
-				{
-					//System.out.println("Tick " + i);
-					SpriteWrapper temp = spriteWrapper.get(i);
-					temp.tick(); //ticks the animation.
-					if(temp.getDone())
-						spriteWrapper.remove(temp);
-				}
+				long timebefore = System.currentTimeMillis();
+				manageSpriteWrappers();
+				long timePassedMilli = System.currentTimeMillis() - timebefore;
+				long sleepTime = (GameConstants.SLEEP_MILITIME - timePassedMilli) > 0 ? (GameConstants.SLEEP_MILITIME - timePassedMilli) : 0;
 				try {
-					Thread.sleep(GameConstants.SLEEP_MILITIME);
+					Thread.sleep(sleepTime);
 				}catch(InterruptedException e){
 					e.printStackTrace();
 				}
@@ -66,22 +64,79 @@ public class SpriteAnimator
 		}).start();
 	}
 	
-	private void manageSpinTokens()
+	private void manageSpriteWrappers()
 	{
-		while(true)
+		for(int i = spriteWrapper.size() - 1; i >= 0; i--)
 		{
-//			for(int i = 0; i < 4; i++)
-//			{
-//				Token token = game.getGameBoard().getToken(row + (i * rowInc), col + (i * colInc));
-//				SpriteWrapper sw = new Spin(token, 2000); //adding animation
-//				SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
-//			}
+			//System.out.println("Tick " + i);
+			SpriteWrapper temp = spriteWrapper.get(i);
+			temp.tick(); //ticks the animation.
+			if(temp.getDone())
+				spriteWrapper.remove(temp);
 		}
+	}
+	
+	public void animateSpinningGroup(Token[] tokens)
+	{
+		new Thread(() -> 
+		{
+			for(Token tk: tokens)
+			{
+				SpriteWrapper sw = new Spin(tk, 2200);
+				addSpriteWrapper(sw);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
+	
+//	private void manageSpinTokens()
+//	{
+//		for(int i = tokenSpinQueue.size() - 1; i >= 0; i--)
+//		{
+//			for(int j = 0; j < tokenSpinQueue.get(i).length; j++)
+//			{
+//				Token temp = tokenSpinQueue.get(i)[j];
+//				if(isAnimated(temp))
+//					break;
+//				if(j == tokenSpinQueue.get(i).length - 1)
+//				{
+//					animateSpinningGroup(tokenSpinQueue.remove(i));
+//					break;
+//				}
+//			}
+//		}
+//	}
+//	
+	public boolean isAnimated(Sprite sprite)
+	{
+		for(int i = 0; i < spriteWrapper.size(); i++)
+		{
+			System.out.println(sprite + " Printed Out");
+			if(sprite == spriteWrapper.get(i).getMainSprite())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void addToSpinQueue(Token[] tokens)
 	{
-		tokenSpinQueue.add(tokens);
+		new Thread(() -> 
+		{
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			animateSpinningGroup(tokens);
+		}).start();
 	}
 	
 	/**

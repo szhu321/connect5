@@ -223,7 +223,7 @@ public class GameScene implements GameConstants
 				if(token.getPoints() != 0)
 				{
 					gc.setFill((token.getPlayer() == PLAYER1) ? Color.BLACK: Color.LIGHTGRAY);
-					gc.fillText(token.getPoints() + "", token.getX() + (token.getWidth() / 2) - 15, token.getY() + (token.getHeight() / 2) + 2);
+					gc.fillText(token.getPoints() + "", token.getX() + (token.getWidth() / 2) - 4, token.getY() + (token.getHeight() / 2) + 12);
 				}
 					
 			}
