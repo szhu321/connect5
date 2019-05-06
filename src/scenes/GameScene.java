@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -50,6 +51,8 @@ public class GameScene implements GameConstants
 	
 	//backend
 	private int selected = -1;
+	private int mouseHoverCol = -1;
+	private boolean displayColMarker = true;
 	
 	//animation
 	private SpriteAnimator spriteAnimator;
@@ -137,6 +140,23 @@ public class GameScene implements GameConstants
 		{
 			placeToken(e.getX());
 		});
+		canvas.setOnMouseMoved(e ->
+		{
+			setMouseHoverCol(e.getX());
+		});
+		canvas.setOnMouseDragged(e ->
+		{
+			setMouseHoverCol(e.getX());
+		});
+		canvas.setOnMouseExited(e ->
+		{
+			mouseHoverCol = -1;
+		});
+	}
+	
+	private void setMouseHoverCol(double x)
+	{
+		mouseHoverCol = (int)(x / (100 * Connect5.getScale()));
 	}
 	
 	private void placeToken(double x)
@@ -228,6 +248,12 @@ public class GameScene implements GameConstants
 					
 			}
 		gc.restore();
+		//draws the col bars.
+		if(displayColMarker)
+			gc.setFill(Color.rgb(0, 0, 0, .1));	
+		else
+			gc.setFill(Color.rgb(0, 0, 0, 0));
+		gc.fillRect(mouseHoverCol * (100 * Connect5.getScale()), 0, (100 * Connect5.getScale()), canvas.getHeight());
 	}
 	
 	private static void rotateGC(GraphicsContext gc, double angle, double centerX, double centerY)
