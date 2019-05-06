@@ -65,6 +65,7 @@ public class Connect5 extends Application
 	{
 		serverPage = new ServerPage();
 		Style.addTextStyle(serverPage.getScene());
+		Style.addButtonStyle(serverPage.getScene());
 		window.setScene(serverPage.getScene());
 	}
 	
@@ -72,6 +73,7 @@ public class Connect5 extends Application
 	{
 		mainMenu = new MainMenu();
 		Style.addTextStyle(mainMenu.getScene());
+		Style.addButtonStyle(mainMenu.getScene());
 		window.setScene(mainMenu.getScene());
 	}
 	
@@ -79,6 +81,7 @@ public class Connect5 extends Application
 	{
 		serverLounge = new ServerLounge(server);
 		Style.addTextStyle(serverLounge.getScene());
+		Style.addButtonStyle(serverLounge.getScene());
 		window.setScene(serverLounge.getScene());
 	}
 	

@@ -45,6 +45,7 @@ public class PromptWindow
 		
 		Scene scene = new Scene(container);
 		Style.addTextStyle(scene);
+		Style.addButtonStyle(scene);
 		
 		window.setScene(scene);
 		window.setOnCloseRequest(e -> answer = false);

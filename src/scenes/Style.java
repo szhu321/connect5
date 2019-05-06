@@ -9,4 +9,9 @@ public class Style
 	{
 		scene.getStylesheets().add("scenes/text.css");
 	}
+	
+	public static void addButtonStyle(Scene scene)
+	{
+		scene.getStylesheets().add("scenes/button.css");
+	}
 }

@@ -81,6 +81,7 @@ public class GameScene implements GameConstants
 	private void setUpExitGame()
 	{
 		exitBtn = new Button("Quit");
+		exitBtn.setStyle("-fx-min-width: 200px");
 		exitBtn.setOnAction(e -> Manager.closePrompt());
 	}
 
@@ -322,6 +323,7 @@ public class GameScene implements GameConstants
 		
 		//adding styling
 		Style.addTextStyle(scene);
+		Style.addButtonStyle(scene);
 	}
 	
 	/**

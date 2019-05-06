@@ -26,7 +26,7 @@ public class ServerPage
 	private TextField portTf;
 	private Button connectBtn;
 	private Text infoTxt;
-	
+	private Button backBtn;
 	
 	public ServerPage()
 	{
@@ -48,6 +48,8 @@ public class ServerPage
 		
 		connectBtn = new Button("Join");
 		connectBtn.setOnAction(e -> connectOnClick());
+		backBtn = new Button("Back");
+		backBtn.setOnAction(e -> Connect5.toMainMenuScene());
 	}
 	
 	public void setUpScene()
@@ -64,6 +66,7 @@ public class ServerPage
 		root.add(ipTf, 1, 1);
 		root.add(connectBtn, 1, 2);
 		root.add(infoTxt, 1, 3);
+		root.add(backBtn, 2, 2);
 	}
 	
 	public void connectOnClick()

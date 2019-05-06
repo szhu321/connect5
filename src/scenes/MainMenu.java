@@ -6,17 +6,19 @@ import game.GameSingle;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.Connect5;
 
 public class MainMenu
 {
 	private Scene scene;
-	private VBox root;
+	private HBox root;
 	
 	private Button localBtn;
 	private Button singleBtn;
 	private Button onlineBtn;
+	private Button exitGameBtn;
 	
 	public MainMenu()
 	{
@@ -29,6 +31,7 @@ public class MainMenu
 		localBtn = new Button("Local 2 Players");
 		singleBtn = new Button("Singleplayer");
 		onlineBtn = new Button("Online Multiplayer");
+		exitGameBtn = new Button("Quit");
 		
 		localBtn.setOnAction(e -> 
 		{
@@ -46,14 +49,25 @@ public class MainMenu
 		{
 			Connect5.toServerScene();
 		});
+		
+		exitGameBtn.setOnAction(e -> 
+		{
+			System.exit(0);
+		});
 	}
 	
 	public void setUpScene()
 	{
-		root = new VBox(50);
+		root = new HBox();
 		root.setAlignment(Pos.CENTER);
 		scene = new Scene(root, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
-		root.getChildren().addAll(singleBtn, localBtn, onlineBtn);
+		
+		VBox buttonCol = new VBox(50);
+		buttonCol.setAlignment(Pos.CENTER);
+		buttonCol.setPrefWidth(400);
+		buttonCol.setPrefHeight(1000);
+		buttonCol.getChildren().addAll(singleBtn, localBtn, onlineBtn, exitGameBtn);
+		root.getChildren().add(buttonCol);
 	}
 	
 	public Scene getScene()
