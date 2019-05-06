@@ -18,8 +18,8 @@ public class Connect5 extends Application
 	 */
 	
 	//screen and items sizes
-	private static double scale = .8;
-	public static final double SCREEN_WIDTH = 1000;
+	private static double scale = 1;
+	public static final double SCREEN_WIDTH = 1100;
 	public static final double SCREEN_HEIGHT = 800;
 	
 	
@@ -83,6 +83,11 @@ public class Connect5 extends Application
 		Style.addTextStyle(serverLounge.getScene());
 		Style.addButtonStyle(serverLounge.getScene());
 		window.setScene(serverLounge.getScene());
+	}
+	
+	public static Manager getManager()
+	{
+		return manager;
 	}
 	
 	public static double getScale(){return scale;}

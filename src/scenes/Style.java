@@ -1,5 +1,7 @@
 package scenes;
 
+import java.io.File;
+
 import javafx.scene.Node;
 import javafx.scene.Scene;
 

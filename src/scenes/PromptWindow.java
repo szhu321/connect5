@@ -1,5 +1,6 @@
 package scenes;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -38,7 +39,12 @@ public class PromptWindow
 			window.close();
 		});
 		
+		//setting button minsize
+		yes.setStyle("-fx-min-width: 200px");
+		no.setStyle("-fx-min-width: 200px");
+		
 		VBox container = new VBox(10);
+		container.setAlignment(Pos.CENTER);
 		HBox btnContainer = new HBox(30);
 		btnContainer.getChildren().addAll(yes, no);
 		container.getChildren().addAll(text, btnContainer);

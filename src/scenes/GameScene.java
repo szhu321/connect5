@@ -136,7 +136,7 @@ public class GameScene implements GameConstants
 	 */
 	private void setUpCanvas()
 	{
-		canvas = new Canvas(Manager.getGame().getGameBoard().colSize() * 100 * Connect5.getScale(), Manager.getGame().getGameBoard().rowSize() * 100 * Connect5.getScale());
+		canvas = new Canvas(Manager.getGame().getGameBoard().colSize() * Token.WIDTH * Connect5.getScale(), Manager.getGame().getGameBoard().rowSize() * Token.HEIGHT * Connect5.getScale());
 		canvas.setOnMouseClicked(e ->
 		{
 			placeToken(e.getX());
@@ -157,14 +157,14 @@ public class GameScene implements GameConstants
 	
 	private void setMouseHoverCol(double x)
 	{
-		mouseHoverCol = (int)(x / (100 * Connect5.getScale()));
+		mouseHoverCol = (int)(x / (Token.WIDTH * Connect5.getScale()));
 	}
 	
 	private void placeToken(double x)
 	{
 		if(selected == -1) //no token is selected
 			return;
-		int col = (int)(x / (100 * Connect5.getScale()));
+		int col = (int)(x / (Token.WIDTH * Connect5.getScale()));
 		Manager.placeToken(selected, col);
 		
 	}
@@ -207,9 +207,15 @@ public class GameScene implements GameConstants
 	//todo: redraws the canvas.
 	public void updateGUI()
 	{
+		//long timebefore = System.currentTimeMillis();
+		
 		updateGameBoard();
 		updateTokenQueue();
 		updateScoreBox();
+//		long timePassedMilli = System.currentTimeMillis() - timebefore;
+//		long sleepTime = (SLEEP_MILITIME - timePassedMilli) > 0 ? (SLEEP_MILITIME - timePassedMilli) : 0;
+//		System.out.println(sleepTime);
+		//Connect5.getManager().notify();//tells the gameLoop that the gui is finished updating.
 	}
 	
 	/**
@@ -227,18 +233,18 @@ public class GameScene implements GameConstants
 		//draws the board.
 		for(int x = 0; x < Manager.getGame().getGameBoard().rowSize(); x++)
 			for(int y = 0; y < Manager.getGame().getGameBoard().colSize(); y++)
-				gc.drawImage(ImageLoader.EMPTY_TILE, y * 100 * Connect5.getScale(), x * 100 * Connect5.getScale());
+				gc.drawImage(ImageLoader.EMPTY_TILE, y * Token.WIDTH * Connect5.getScale(), x * Token.HEIGHT * Connect5.getScale());
 		
 		
 		//draws the tokens.
 		
-		gc.setFont(new Font("impact", 26));
+		gc.setFont(new Font("impact", 28));
 		for(Token token: Manager.getGame().getGameBoard().getTokenCopy())
 			if(token != null)
 			{
 				
 				rotateGC(gc, token.getFaceAngle(), token.getX() + token.getWidth() / 2, token.getY() + token.getHeight() / 2);
-				gc.drawImage(token.getImage(), token.getX(), token.getY());
+				gc.drawImage(token.getImage(), token.getX(), token.getY(), token.getWidth(), token.getHeight());
 				//draws the number on the token
 				
 				if(token.getPoints() != 0)
@@ -254,7 +260,7 @@ public class GameScene implements GameConstants
 			gc.setFill(Color.rgb(0, 0, 0, .1));	
 		else
 			gc.setFill(Color.rgb(0, 0, 0, 0));
-		gc.fillRect(mouseHoverCol * (100 * Connect5.getScale()), 0, (100 * Connect5.getScale()), canvas.getHeight());
+		gc.fillRect(mouseHoverCol * (Token.WIDTH * Connect5.getScale()), 0, (Token.WIDTH * Connect5.getScale()), canvas.getHeight());
 	}
 	
 	private static void rotateGC(GraphicsContext gc, double angle, double centerX, double centerY)

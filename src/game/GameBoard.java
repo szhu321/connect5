@@ -20,8 +20,8 @@ public class GameBoard implements GameConstants
 		int row = getAvaliableRow(col);
 		if(row != -1)
 		{
-			tk.setX(col * 100 * Connect5.getScale());
-			tk.setY((gameBoard.length - 1 - row) * 100 * Connect5.getScale());
+			tk.setX(col * Token.WIDTH * Connect5.getScale());
+			tk.setY((gameBoard.length - 1 - row) * Token.HEIGHT * Connect5.getScale());
 			gameBoard[row][col] = tk;
 			return true;
 		}
