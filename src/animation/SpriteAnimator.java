@@ -72,7 +72,10 @@ public class SpriteAnimator
 			SpriteWrapper temp = spriteWrapper.get(i);
 			temp.tick(); //ticks the animation.
 			if(temp.getDone())
+			{
 				spriteWrapper.remove(temp);
+				temp.getMainSprite().setAnimating(false);
+			}
 		}
 	}
 	
@@ -82,8 +85,10 @@ public class SpriteAnimator
 		{
 			for(Token tk: tokens)
 			{
-				SpriteWrapper sw = new Spin(tk, 2200);
-				addSpriteWrapper(sw);
+				//SpriteWrapper sw = new Spin(tk, 1200);
+				//addSpriteWrapper(sw);
+				SpriteWrapper sw2 = new GrowShrink(tk);
+				addSpriteWrapper(sw2);
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
@@ -94,49 +99,35 @@ public class SpriteAnimator
 		}).start();
 	}
 	
-//	private void manageSpinTokens()
-//	{
-//		for(int i = tokenSpinQueue.size() - 1; i >= 0; i--)
-//		{
-//			for(int j = 0; j < tokenSpinQueue.get(i).length; j++)
-//			{
-//				Token temp = tokenSpinQueue.get(i)[j];
-//				if(isAnimated(temp))
-//					break;
-//				if(j == tokenSpinQueue.get(i).length - 1)
-//				{
-//					animateSpinningGroup(tokenSpinQueue.remove(i));
-//					break;
-//				}
-//			}
-//		}
-//	}
-//	
-	public boolean isAnimated(Sprite sprite)
-	{
-		for(int i = 0; i < spriteWrapper.size(); i++)
-		{
-			System.out.println(sprite + " Printed Out");
-			if(sprite == spriteWrapper.get(i).getMainSprite())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public void addToSpinQueue(Token[] tokens)
 	{
 		new Thread(() -> 
 		{
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			while(isAnimating(tokens))
+			{
+				try {
+					Thread.sleep(17);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			animateSpinningGroup(tokens);
 		}).start();
+	}
+	
+	public boolean isAnimating(Sprite[] sprite)
+	{
+		for(Sprite sp: sprite)
+			if(sp.isAnimating())
+				return true;
+		return false;
 	}
 	
 	/**

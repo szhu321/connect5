@@ -9,6 +9,7 @@ public abstract class SpriteWrapper
 	
 	public SpriteWrapper(Sprite sprite)
 	{
+		sprite.setAnimating(true);
 		mainSprite = sprite;
 		done = false;
 	}

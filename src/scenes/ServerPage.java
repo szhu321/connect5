@@ -1,19 +1,17 @@
 package scenes;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import game.GameConstants;
-import game.GameMulti;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.Connect5;
 
@@ -55,10 +53,18 @@ public class ServerPage
 	public void setUpScene()
 	{
 		root = new GridPane();
-		root.setVgap(20);
-		root.setHgap(5);
+		root.setVgap(35);
+		root.setHgap(30);
 		
-		scene = new Scene(root, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
+		//added a wrapper to center the gridPane.
+		VBox container = new VBox();
+		container.setAlignment(Pos.CENTER);
+		container.getChildren().add(root);
+		
+		
+		scene = new Scene(container, Connect5.SCREEN_WIDTH, Connect5.SCREEN_HEIGHT);
+		
+		//System.out.println(container.getWidth());
 		
 		root.add(new Label("Port Number:"), 0, 0);
 		root.add(new Label("IP address:"), 0, 1);
@@ -66,7 +72,8 @@ public class ServerPage
 		root.add(ipTf, 1, 1);
 		root.add(connectBtn, 1, 2);
 		root.add(infoTxt, 1, 3);
-		root.add(backBtn, 2, 2);
+		root.add(backBtn, 0, 2);
+		root.setMaxWidth(500);//set maxwidth so it can be centered properly.
 	}
 	
 	public void connectOnClick()
@@ -81,31 +88,23 @@ public class ServerPage
 				Socket socket = new Socket(ipTf.getText(), Integer.parseInt(portTf.getText()));
 				
 				infoTxt.setText("Successfully connected");
-//				Platform.runLater(() -> 
-//				{
-//					Connect5.createNewManager(new GameMulti(socket));
-//					System.out.println("Manager Created");
-//					Connect5.toManagerScene();
-//				});
-				
 				//moves to server lounge.
 				Platform.runLater(() -> Connect5.toServerLounge(socket));
 				
 			}
 			catch (NumberFormatException e1) {
 				infoTxt.setText("Incorrect Input");
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			} catch (UnknownHostException e1) {
 				infoTxt.setText("Unknow host");
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			} catch (IOException e1) {
 				infoTxt.setText("Connection Failed");
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			} finally { 
 				connectBtn.setDisable(false); //enable the button when it fails to connect.
 			}
 		}).start();
-		
 	}
 	
 	public Scene getScene()

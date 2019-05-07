@@ -173,6 +173,7 @@ public class Manager implements GameConstants
 	
 	public static void addTokenAnimation(Token token)
 	{
+		token.updateOriginalLocations();
 		SpriteWrapper sw = new FloatDrop(token, -50, getTokenMomentum(token)); //adding animation
 		SpriteAnimator.getCurrentAnimator().addSpriteWrapper(sw);
 		//SpriteWrapper sw2 = new Spin(token, 700000);
