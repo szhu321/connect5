@@ -371,6 +371,12 @@ public class GameScene implements GameConstants
 	
 	public void gameOverMulti(int status)
 	{
+		System.out.println("SEHHVSIHvhusu");
+		System.out.println("SEHHVSIHvhusu");
+		System.out.println("SEHHVSIHvhusu");
+		System.out.println("SEHHVSIHvhusu");
+		System.out.println("SEHHVSIHvhusu");
+		System.out.println("SEHHVSIHvhusu");
 		stopGame();
 		if(status == ServerConstants.WIN)
 			print("Server", "You win!");

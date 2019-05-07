@@ -96,7 +96,7 @@ public abstract class Game implements GameConstants
 	 * @param player The player selected.
 	 * @return Number of points the selected player has.
 	 */
-	private int getConnectPoints(int player)
+	public int getConnectPoints(int player)
 	{
 		int[][] tempBoard = gameBoard.getPlayerGrid();
 		int result = 0;

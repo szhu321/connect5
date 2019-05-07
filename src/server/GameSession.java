@@ -9,6 +9,7 @@ import game.Game;
 import game.GameConstants;
 import game.GameLocal;
 import game.GameMulti;
+import game.GameServer;
 import game.Token;
 
 
@@ -23,11 +24,11 @@ public class GameSession implements Runnable, GameConstants, ServerConstants, Se
 	private ServerSocketManager p1SManager;
 	private ServerSocketManager p2SManager;
 	
-	private GameLocal game;
+	private GameServer game;
 	
 	public GameSession(Socket player1, Socket player2)
 	{
-		game = new GameLocal();//Decided to use gamelocal.
+		game = new GameServer();//Decided to use gameServer.
 		game.getPlayerPile().resetToEmpty();
 		game.getPlayer2Pile().resetToEmpty();
 		session = ++sessionNum;
