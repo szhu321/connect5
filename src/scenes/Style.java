@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 
 public class Style
 {

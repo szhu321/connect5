@@ -5,6 +5,9 @@ import java.net.Socket;
 import animation.ImageLoader;
 import game.Game;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import manage.Manager;
 import scenes.*;
@@ -42,7 +45,9 @@ public class Connect5 extends Application
 		window.setTitle("Connect 5");
 		//window.setResizable(false);
 		window.setOnCloseRequest(e -> System.exit(0));
-		
+		HBox bh = new HBox(12);
+		bh.setSpacing(20);
+		bh.setPadding(new Insets(20,20,20,20));
 		//loading images and going to the main menu.
 		ImageLoader.initImages();
 		toMainMenuScene();

@@ -9,3 +9,10 @@ public class Test
 		Timer time = new Timer(10000);
 	}
 }
+
+class Box
+{
+	public Box(int i){
+		
+	}
+}

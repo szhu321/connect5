@@ -4,7 +4,7 @@ import game.Sprite;
 
 public class GravityDrop extends SpriteWrapper
 {
-	protected static final double GRAVITY = .2;
+	protected static final double GRAVITY = .3;
 	double speed;
 	
 	double yStart;

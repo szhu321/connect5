@@ -28,10 +28,10 @@ public class GrowShrink extends SpriteWrapper
 	{
 		super(sprite);
 		phase = 1;
-		totalTime = 800;
+		totalTime = 1000;
 		percentConstant = .1;
 		deltaPercent = 0.0001;
-		increaseDeltaPercent = 0.001;
+		increaseDeltaPercent = 0.0015;
 		phase2Time = (long)(totalTime * percentConstant);
 		phase1Time = (totalTime - phase2Time) / 2;
 		phase3Time = phase1Time;
