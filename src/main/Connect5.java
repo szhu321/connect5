@@ -6,7 +6,6 @@ import animation.ImageLoader;
 import game.Game;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import manage.Manager;
@@ -31,6 +30,7 @@ public class Connect5 extends Application
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
 	private static ServerLounge serverLounge;
+	private static HowToPlay howToPlay;
 
 	public static void main(String[] args)
 	{
@@ -80,6 +80,14 @@ public class Connect5 extends Application
 		Style.addTextStyle(mainMenu.getScene());
 		Style.addButtonStyle(mainMenu.getScene());
 		window.setScene(mainMenu.getScene());
+	}
+	
+	public static void toHowToPlayScene()
+	{
+		howToPlay = new HowToPlay();
+		Style.addTextStyle(howToPlay.getScene());
+		Style.addButtonStyle(howToPlay.getScene());
+		window.setScene(howToPlay.getScene());
 	}
 	
 	public static void toServerLounge(Socket server)

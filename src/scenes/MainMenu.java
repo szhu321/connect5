@@ -21,6 +21,7 @@ public class MainMenu
 	private Button singleBtn;
 	private Button onlineBtn;
 	private Button exitGameBtn;
+	private Button howToPlayBtn;
 	
 	public MainMenu()
 	{
@@ -34,6 +35,7 @@ public class MainMenu
 		singleBtn = new Button("Singleplayer");
 		onlineBtn = new Button("Online Multiplayer");
 		exitGameBtn = new Button("Quit");
+		howToPlayBtn = new Button("How To Play");
 		
 		localBtn.setOnAction(e -> 
 		{
@@ -56,6 +58,8 @@ public class MainMenu
 		{
 			System.exit(0);
 		});
+		
+		howToPlayBtn.setOnAction(e -> Connect5.toHowToPlayScene());
 	}
 	
 	public void setUpScene()
@@ -68,7 +72,7 @@ public class MainMenu
 		buttonCol.setAlignment(Pos.CENTER);
 		buttonCol.setPrefWidth(400);
 		buttonCol.setPrefHeight(1000);
-		buttonCol.getChildren().addAll(singleBtn, localBtn, onlineBtn, exitGameBtn);
+		buttonCol.getChildren().addAll(singleBtn, localBtn, onlineBtn, howToPlayBtn, exitGameBtn);
 		root.getChildren().add(buttonCol);
 	}
 	
