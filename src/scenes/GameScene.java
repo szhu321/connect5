@@ -40,6 +40,7 @@ public class GameScene implements GameConstants
 	private GridPane root;
 	private VBox textBox;
 	private Button exitBtn;
+	private Button restartBtn;
 	
 	//Gui Chunks
 	protected Label p1PtLbl;
@@ -74,15 +75,18 @@ public class GameScene implements GameConstants
 		setUpCanvas();
 		setUpTokenQueue();
 		setUpTextBox();
-		setUpExitGame();
+		setUpExitAndRestartGame();
 		createNewScene();
 	}
 	
-	private void setUpExitGame()
+	private void setUpExitAndRestartGame()
 	{
 		exitBtn = new Button("Quit");
 		exitBtn.setStyle("-fx-min-width: 200px");
 		exitBtn.setOnAction(e -> Manager.closePrompt());
+		restartBtn = new Button("Restart");
+		restartBtn.setStyle("-fx-min-width: 200px");
+		restartBtn.setOnAction(e -> Manager.restart());
 	}
 
 	private void setUpTextBox()
@@ -316,7 +320,7 @@ public class GameScene implements GameConstants
 		root.setPadding(new Insets(20, 20, 20, 20));
 		
 		VBox rightContainer = new VBox(50);
-		rightContainer.getChildren().addAll(scoreBox, textBox, exitBtn);
+		rightContainer.getChildren().addAll(scoreBox, textBox, exitBtn, restartBtn);
 		VBox leftContainer = new VBox(20);
 		leftContainer.setAlignment(Pos.CENTER);
 		leftContainer.getChildren().addAll(canvas, tokenQueue);

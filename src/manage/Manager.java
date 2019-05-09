@@ -204,6 +204,12 @@ public class Manager implements GameConstants
 		return momentum;
 	}
 	
+	public static void restart()
+	{
+		//restart
+		PromptWindow.openYesNoWindow("Button does not work yet is that ok?");
+	}
+	
 	public static Game getGame()
 	{
 		return game;
