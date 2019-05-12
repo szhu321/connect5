@@ -131,6 +131,12 @@ public class GameMulti extends Game implements ClientSocketMaster, ServerConstan
 		Manager.serverPlaceToken(tk, col);
 	}
 	
+	public Game getNewInstance()
+	{
+		//return new GameMulti(socketManager.getSocket(),);
+		return null;
+	}
+	
 	public void close()
 	{
 		socketManager.close();

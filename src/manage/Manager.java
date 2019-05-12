@@ -54,7 +54,7 @@ public class Manager implements GameConstants
 			{
 				while(gameLoop)
 				{
-					//TODO: account for the time spent running the GUI.
+					//account for the time spent running the GUI.
 					long timebefore = System.currentTimeMillis();
 					Platform.runLater(() -> screen.updateGUI());
 					long timePassedMilli = System.currentTimeMillis() - timebefore;
@@ -207,7 +207,19 @@ public class Manager implements GameConstants
 	public static void restart()
 	{
 		//restart
-		PromptWindow.openYesNoWindow("Button does not work yet is that ok?");
+		if(game.getGameType() != ONLINE_GAME)
+		{
+			boolean answer = PromptWindow.openYesNoWindow("Are you sure you want to restart?");
+			if(answer)
+			{
+				Connect5.createNewManager(game.getNewInstance());
+				Connect5.toManagerScene();
+			}
+		}
+		else
+		{
+			//TODO: restart for multiplayer.
+		}
 	}
 	
 	public static Game getGame()

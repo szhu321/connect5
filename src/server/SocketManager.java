@@ -202,6 +202,7 @@ public abstract class SocketManager implements ServerConstants
 	public ObjectOutputStream getObjOut() {return objOut;}
 	public SocketMaster getMaster() {return master;}
 	public void setWaiting(boolean waiting) {this.waiting = waiting;}
+	public Socket getSocket() {return mainSocket;};
 	
 	public String toString()
 	{

@@ -10,11 +10,11 @@ public class Style
 {
 	public static void addTextStyle(Scene scene)
 	{
-		scene.getStylesheets().add("scenes/text.css");
+		scene.getStylesheets().add("file:resources/stylesheets/text.css");
 	}
 	
 	public static void addButtonStyle(Scene scene)
 	{
-		scene.getStylesheets().add("scenes/button.css");
+		scene.getStylesheets().add("file:resources/stylesheets/button.css");
 	}
 }

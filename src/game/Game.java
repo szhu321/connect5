@@ -231,5 +231,6 @@ public abstract class Game implements GameConstants
 		return result;
 	}
 	
+	public abstract Game getNewInstance();
 	public abstract void close();
 }
