@@ -218,7 +218,7 @@ public class Manager implements GameConstants
 		}
 		else
 		{
-			//TODO: restart for multiplayer.
+			boolean answer = PromptWindow.openYesNoWindow("Unable to proceed, is that ok?");
 		}
 	}
 	

@@ -1,19 +1,15 @@
 package server;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import game.Game;
 import game.GameConstants;
-import game.GameLocal;
-import game.GameMulti;
 import game.GameServer;
 import game.Token;
 
 
-public class GameSession implements Runnable, GameConstants, ServerConstants, ServerSocketMaster
+public class GameSession implements GameConstants, ServerConstants, ServerSocketMaster
 {
 	private static int sessionNum = 0;
 	private int session;
@@ -62,15 +58,14 @@ public class GameSession implements Runnable, GameConstants, ServerConstants, Se
 		}
 	}
 
-	@Override
-	public void run()
-	{
-		
-	}	
-	
 	public int getSession()
 	{
 		return session;
+	}
+	
+	public void restart()
+	{
+		//TODO: Connect them again.
 	}
 
 	@Override

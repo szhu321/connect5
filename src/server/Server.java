@@ -1,11 +1,9 @@
 package server;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
-import java.util.Random;
 
 import game.GameConstants;
 import javafx.application.Application;
@@ -95,7 +93,7 @@ public class Server extends Application implements GameConstants
 					write("All players have connected.\n Starting Session " + numOfSessions++ + "...");
 					
 					numPlayers = 0;
-					new Thread(new GameSession(sockets[1], sockets[0])).start();
+					new GameSession(sockets[1], sockets[0]);
 				}
 			} 
 			catch (IOException e)
