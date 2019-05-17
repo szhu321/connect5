@@ -24,7 +24,6 @@ public class Connect5 extends Application
 	public static final double SCREEN_WIDTH = 1100;
 	public static final double SCREEN_HEIGHT = 800;
 	
-	
 	private static Stage window;
 	private static Manager manager;
 	private static MainMenu mainMenu;
