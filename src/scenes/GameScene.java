@@ -9,7 +9,7 @@ import game.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import scenes.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -332,8 +332,7 @@ public class GameScene implements GameConstants
 		root.add(leftContainer, 0, 0);
 		
 		//adding styling
-		Style.addTextStyle(scene);
-		Style.addButtonStyle(scene);
+		scene.addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
 	}
 	
 	/**

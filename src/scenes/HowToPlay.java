@@ -1,7 +1,7 @@
 package scenes;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import scenes.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;

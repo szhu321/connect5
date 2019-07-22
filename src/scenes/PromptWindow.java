@@ -1,7 +1,7 @@
 package scenes;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import scenes.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -50,8 +50,8 @@ public class PromptWindow
 		container.getChildren().addAll(text, btnContainer);
 		
 		Scene scene = new Scene(container);
-		Style.addTextStyle(scene);
-		Style.addButtonStyle(scene);
+		scene.addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
+
 		
 		window.setScene(scene);
 		window.setOnCloseRequest(e -> answer = false);

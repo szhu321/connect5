@@ -24,7 +24,6 @@ public class Connect5 extends Application
 	public static final double SCREEN_WIDTH = 1100;
 	public static final double SCREEN_HEIGHT = 800;
 	
-	private static Stage window;
 	private static Manager manager;
 	private static MainMenu mainMenu;
 	private static ServerPage serverPage;
@@ -37,10 +36,9 @@ public class Connect5 extends Application
 	}
 	
 	@Override
-	public void start(Stage st)
+	public void start(Stage window)
 	{
 		//setting up the window.
-		window = st;
 		window.setTitle("Connect 5");
 		//window.setResizable(false);
 		window.setOnCloseRequest(e -> System.exit(0));
@@ -49,10 +47,10 @@ public class Connect5 extends Application
 		bh.setPadding(new Insets(20,20,20,20));
 		//loading images and going to the main menu.
 		ImageLoader.initImages();
-		toMainMenuScene();
 		
-		//displaying the screen.
-		window.show();
+		Scene.setWindow(window);
+		
+		toMainMenuScene();
 	}
 	
 	public static void createNewManager(Game game)
@@ -62,39 +60,35 @@ public class Connect5 extends Application
 
 	public static void toManagerScene()
 	{
-		window.setScene(Manager.getGameScene().getScene());
+		Manager.getGameScene().getScene().showScene();
 	}
 	
 	public static void toServerScene()
 	{
 		serverPage = new ServerPage();
-		Style.addTextStyle(serverPage.getScene());
-		Style.addButtonStyle(serverPage.getScene());
-		window.setScene(serverPage.getScene());
+		serverPage.getScene().addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
+		serverPage.getScene().showScene();
 	}
 	
 	public static void toMainMenuScene()
 	{
 		mainMenu = new MainMenu();
-		Style.addTextStyle(mainMenu.getScene());
-		Style.addButtonStyle(mainMenu.getScene());
-		window.setScene(mainMenu.getScene());
+		mainMenu.getScene().addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
+		mainMenu.getScene().showScene();
 	}
 	
 	public static void toHowToPlayScene()
 	{
 		howToPlay = new HowToPlay();
-		Style.addTextStyle(howToPlay.getScene());
-		Style.addButtonStyle(howToPlay.getScene());
-		window.setScene(howToPlay.getScene());
+		howToPlay.getScene().addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
+		howToPlay.getScene();
 	}
 	
 	public static void toServerLounge(Socket server)
 	{
 		serverLounge = new ServerLounge(server);
-		Style.addTextStyle(serverLounge.getScene());
-		Style.addButtonStyle(serverLounge.getScene());
-		window.setScene(serverLounge.getScene());
+		serverLounge.getScene().addStylesheets(Style.BUTTON_STYLE, Style.TEXT_STYLE);
+		serverLounge.getScene().showScene();
 	}
 	
 	public static Manager getManager()

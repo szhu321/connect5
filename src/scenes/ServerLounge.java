@@ -6,7 +6,7 @@ import java.net.Socket;
 
 import game.GameMulti;
 import javafx.application.Platform;
-import javafx.scene.Scene;
+import scenes.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.Connect5;
