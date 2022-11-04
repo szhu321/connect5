@@ -48,3 +48,8 @@ Clone/download the repository. Then using your favorite IDE open up the project.
 5. Win condition: 
     - The game ends when someone connects 5 token of the same color or if the board is full. 
     - The player with the most points wins(if the points are the same it’s a tie).
+
+## Credits
+
+- Check out this [video](https://youtu.be/AubJaosfI-0) on how to setup JavaFX in VSCode.
+- I got JDK8 w/JavaFX [here](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html).
